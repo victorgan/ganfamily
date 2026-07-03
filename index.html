@@ -213,6 +213,33 @@
   .chip.widowed { background: var(--chip-widowed); }
   .union .children-label { font-size: 0.8rem; color: var(--muted); margin: 10px 0 6px; }
 
+  /* ---- Pedigree chart ---- */
+  .ped { overflow-x: auto; padding: 4px 0; }
+  .pednode { display: flex; align-items: center; }
+  .pedparents { display: flex; flex-direction: column; gap: 10px; margin-left: 16px; padding-left: 16px; border-left: 2px solid var(--line); }
+  .pedparents > .pednode { position: relative; }
+  .pedparents > .pednode::before {
+    content: "";
+    position: absolute;
+    left: -16px; top: 50%;
+    width: 16px; height: 2px;
+    background: var(--line);
+  }
+  .pedcard {
+    display: inline-block;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 6px 12px;
+    color: var(--ink);
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .pedcard:hover { text-decoration: none; box-shadow: 0 3px 10px rgba(0,0,0,0.1); }
+  .pedcard.unknown { border-style: dashed; background: transparent; color: var(--muted); }
+  .pedcard .tree-meta { font-weight: 400; }
+
   /* ---- Tree view ---- */
   .tree-root { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 20px; }
   .tree-root > h3 { margin: 0 0 12px; font-size: 1.05rem; }
@@ -296,16 +323,6 @@ function siblingsOf(id) {
     }
   }
   return { full, half };
-}
-
-function grandparentsOf(id) {
-  const gps = [];
-  for (const parent of parentsOf(id)) {
-    for (const gp of parentsOf(parent.id)) {
-      if (!gps.some(g => g.id === gp.id)) gps.push(gp);
-    }
-  }
-  return gps;
 }
 
 function dedupe(people) {
@@ -484,6 +501,23 @@ function cardsSection(title, entries) {
   </section>`;
 }
 
+function pedNode(id, depth) {
+  // One node of the ancestry chart: the person, with their parents nested
+  // to the right. depth limits how many generations up are drawn.
+  const p = byId[id];
+  if (!p) return "";
+  const years = lifeSpan(p);
+  let html = `<div class="pednode"><a class="pedcard ${p.unknown ? "unknown" : ""}" href="#/p/${p.id}">${esc(p.name)}${years ? ` <span class="tree-meta">${esc(years)}</span>` : ""}</a>`;
+  const parents = parentsOf(id);
+  if (parents.length && depth > 0) {
+    html += `<div class="pedparents">${parents.map(par => pedNode(par.id, depth - 1)).join("")}</div>`;
+  } else if (parents.length) {
+    html += `<div class="pedparents"><div class="pednode"><span class="tree-meta">&nbsp;⋯&nbsp;</span></div></div>`;
+  }
+  html += `</div>`;
+  return html;
+}
+
 const STATUS_LABEL = {
   married: "Married", divorced: "Divorced", separated: "Separated",
   partner: "Partner", widowed: "Widowed",
@@ -525,6 +559,11 @@ function renderPerson(id) {
     </div>
   </div>`;
 
+  // Ancestry chart: person → parents → grandparents → great-grandparents
+  if (parentsOf(id).length) {
+    html += `<section><h3>Ancestry</h3><div class="ped">${pedNode(id, 3)}</div></section>`;
+  }
+
   // Immediate family first
   const parents = parentsOf(id);
   html += parents.length
@@ -560,7 +599,6 @@ function renderPerson(id) {
   }
 
   // Extended family
-  html += cardsSection("Grandparents", grandparentsOf(id).map(x => [x]));
   const auntsUncles = auntsUnclesOf(id);
   html += cardsSection("Aunts & Uncles", auntsUncles.map(x => [x]));
   const niblings = dedupe([...sibs.full, ...sibs.half].flatMap(s => childrenOf(s.id)));
