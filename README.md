@@ -40,6 +40,7 @@ All data lives in [`data.js`](data.js) — edit it and refresh. Two lists:
   location: "Mississauga, Ontario, Canada",
   occupation: null,
   notes: "Free text shown on the person's page.",
+  photo: "photos/victor.jpg",  // optional; drop images in a photos/ folder
   unknown: false,          // true = identity not yet known (renders dashed)
 }
 ```

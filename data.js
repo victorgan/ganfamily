@@ -13,6 +13,8 @@
 //   location   where they live now
 //   occupation what they do / did
 //   notes      free text shown on their page
+//   photo      optional path to a picture, e.g. "photos/victor.jpg"
+//              (drop image files into a photos/ folder in this repo)
 //   unknown    true = placeholder person whose identity isn't known yet
 //
 // UNIONS: one entry per couple (marriage, partnership, or past relationship).

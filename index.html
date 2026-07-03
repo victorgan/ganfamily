@@ -21,7 +21,24 @@
     --chip-divorced: #a05a2c;
     --chip-partner: #5a5aa0;
     --chip-widowed: #6b6b6b;
+    --warn-ink: #a05a2c;
+    --warn-bg: #f7ecdf;
     --radius: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1c1e1d;
+      --card: #262927;
+      --ink: #e8e6e0;
+      --muted: #a3a39a;
+      --accent: #82c4a1;
+      --accent-soft: #2c3d34;
+      --line: #3a3e3c;
+      --male: #5b8cbf;
+      --female: #bf7099;
+      --warn-ink: #d9a06b;
+      --warn-bg: #3a2f24;
+    }
   }
   * { box-sizing: border-box; }
   body {
@@ -114,11 +131,25 @@
   .unknown-banner {
     margin-top: 10px;
     font-size: 0.85rem;
-    color: var(--chip-divorced);
-    background: #f7ecdf;
+    color: var(--warn-ink);
+    background: var(--warn-bg);
     border-radius: 8px;
     padding: 6px 10px;
     display: inline-block;
+  }
+  .avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+  }
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 40px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-align: center;
   }
 
   /* ---- Sections ---- */
@@ -228,6 +259,12 @@
 </header>
 
 <main id="app"></main>
+
+<footer>
+  Spotted a mistake, or know one of the missing names?
+  <a href="https://github.com/victorgan/ganfamily/edit/main/data.js" target="_blank" rel="noopener">Edit the tree on GitHub</a>
+  — every person and relationship lives in one simple file.
+</footer>
 
 <script src="data.js"></script>
 <script>
@@ -406,6 +443,11 @@ function avatarClass(p) {
   return p.gender === "M" ? "m" : p.gender === "F" ? "f" : "u";
 }
 
+function avatarHtml(p, small) {
+  const inner = p.photo ? `<img src="${esc(p.photo)}" alt="${esc(p.name)}">` : initials(p);
+  return `<div class="avatar ${small ? "small " : ""}${avatarClass(p)}">${inner}</div>`;
+}
+
 function lifeSpan(p) {
   if (!p.born && !p.died) return null;
   const b = p.born ? `b. ${p.born}` : "b. ?";
@@ -423,7 +465,7 @@ function subLine(p) {
 function personCard(p, relTag, subExtra) {
   const sub = subLine(p);
   return `<a class="pcard ${p.unknown ? "unknown" : ""}" href="#/p/${p.id}">
-    <div class="avatar small ${avatarClass(p)}">${initials(p)}</div>
+    ${avatarHtml(p, true)}
     <div>
       <div class="pname">${esc(p.name)}</div>
       ${sub ? `<div class="psub">${esc(sub)}</div>` : ""}
@@ -472,7 +514,7 @@ function renderPerson(id) {
 
   const rel = relationTo(id);
   let html = `<div class="profile">
-    <div class="avatar ${avatarClass(p)}">${initials(p)}</div>
+    ${avatarHtml(p)}
     <div>
       <h2>${esc(p.name)}</h2>
       ${rel ? `<div class="kinship">${esc(rel)}</div>` : ""}
