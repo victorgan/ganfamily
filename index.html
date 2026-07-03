@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gan Family Tree</title>
+<meta name="description" content="The Gan family tree — browse ancestors, relatives, and family connections.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
 <style>
   :root {
     --bg: #f6f4ef;
@@ -77,7 +79,7 @@
     border-bottom: 1px solid var(--line);
   }
   .search-results a:last-child { border-bottom: none; }
-  .search-results a:hover { background: var(--accent-soft); text-decoration: none; }
+  .search-results a:hover, .search-results a.active { background: var(--accent-soft); text-decoration: none; }
   .search-results .sub { font-size: 0.8rem; color: var(--muted); }
 
   main { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
@@ -104,6 +106,7 @@
   .avatar.u { background: #9a9a90; }
   .avatar.small { width: 44px; height: 44px; font-size: 0.95rem; }
   .profile h2 { margin: 0 0 4px; font-size: 1.5rem; }
+  .kinship { color: var(--accent); font-size: 0.95rem; font-weight: 600; }
   .facts { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; margin-top: 10px; font-size: 0.95rem; }
   .facts dt { color: var(--muted); }
   .facts dd { margin: 0; }
@@ -268,6 +271,123 @@ function grandparentsOf(id) {
   return gps;
 }
 
+function dedupe(people) {
+  return people.filter((p, i) => people.findIndex(x => x.id === p.id) === i);
+}
+
+function auntsUnclesOf(id) {
+  const out = [];
+  for (const parent of parentsOf(id)) {
+    const s = siblingsOf(parent.id);
+    for (const x of [...s.full, ...s.half]) if (!out.some(a => a.id === x.id)) out.push(x);
+  }
+  return out;
+}
+
+// ---------------------------------------------------------------------------
+// Kinship: describe how anyone relates to the home person (HOME_PERSON)
+// ---------------------------------------------------------------------------
+const REF = HOME_PERSON;
+const refFirstName = byId[REF] ? byId[REF].name.split(" ")[0] : "home";
+const CURRENT_YEAR = new Date().getFullYear();
+
+function yearOf(v) {
+  const m = String(v ?? "").match(/^(\d{4})/);
+  return m ? +m[1] : null;
+}
+
+const _ancCache = new Map();
+function ancestorMapOf(id) {
+  // Map of ancestorId -> generations up (self = 0)
+  if (_ancCache.has(id)) return _ancCache.get(id);
+  const map = new Map([[id, 0]]);
+  const queue = [[id, 0]];
+  while (queue.length) {
+    const [cur, d] = queue.shift();
+    const u = parentUnion(cur);
+    if (!u) continue;
+    for (const pid of u.partners) {
+      if (!map.has(pid)) { map.set(pid, d + 1); queue.push([pid, d + 1]); }
+    }
+  }
+  _ancCache.set(id, map);
+  return map;
+}
+
+function gword(p, male, female, neutral) {
+  return p.gender === "M" ? male : p.gender === "F" ? female : neutral;
+}
+
+const ORDINAL = ["", "first", "second", "third", "fourth", "fifth"];
+
+function sideOf(ancestorId) {
+  // "paternal"/"maternal" from the home person's perspective
+  for (const parent of parentsOf(REF)) {
+    if (ancestorMapOf(parent.id).has(ancestorId)) {
+      if (parent.gender === "M") return "paternal ";
+      if (parent.gender === "F") return "maternal ";
+    }
+  }
+  return "";
+}
+
+function bloodRelation(pId) {
+  // Relationship word for pId relative to the home person, or null if no
+  // blood link is recorded. Finds the closest common ancestor and converts
+  // the (generations-up, generations-down) pair into English.
+  if (pId === REF || !byId[pId]) return null;
+  const a = ancestorMapOf(REF), b = ancestorMapOf(pId);
+  let best = null;
+  for (const [anc, du] of a) {
+    if (b.has(anc)) {
+      const dv = b.get(anc);
+      if (!best || du + dv < best.du + best.dv) best = { anc, du, dv };
+    }
+  }
+  if (!best) return null;
+  const p = byId[pId];
+  const { anc, du, dv } = best;
+  const greats = n => "great-".repeat(Math.max(0, n));
+  if (dv === 0) { // p is a direct ancestor
+    if (du === 1) return gword(p, "father", "mother", "parent");
+    return sideOf(pId) + greats(du - 2) + gword(p, "grandfather", "grandmother", "grandparent");
+  }
+  if (du === 0) { // p is a direct descendant
+    if (dv === 1) return gword(p, "son", "daughter", "child");
+    return greats(dv - 2) + gword(p, "grandson", "granddaughter", "grandchild");
+  }
+  if (du === 1 && dv === 1) {
+    const half = parentUnion(REF) !== parentUnion(pId) ? "half-" : "";
+    return half + gword(p, "brother", "sister", "sibling");
+  }
+  if (dv === 1) return sideOf(anc) + greats(du - 2) + gword(p, "uncle", "aunt", "uncle/aunt");
+  if (du === 1) return greats(dv - 2) + gword(p, "nephew", "niece", "nephew/niece");
+  const degree = Math.min(du, dv) - 1;
+  const removed = Math.abs(du - dv);
+  let label = (ORDINAL[degree] || degree + "th") + " cousin";
+  if (removed) label += removed === 1 ? " once removed" : removed === 2 ? " twice removed" : ` ${removed}× removed`;
+  return label;
+}
+
+const AFFINAL_VERB = {
+  married: "married to", divorced: "formerly married to",
+  separated: "separated from", partner: "partner of", widowed: "widowed from",
+};
+
+function relationTo(pId) {
+  // Full phrase, e.g. "Victor's paternal uncle" or "married to Victor's sister".
+  if (pId === REF) return null;
+  const blood = bloodRelation(pId);
+  if (blood) return `${refFirstName}'s ${blood}`;
+  for (const u of unionsOf(pId)) {
+    const otherId = u.partners.find(x => x !== pId);
+    if (otherId === REF) return `${AFFINAL_VERB[u.status] || "partner of"} ${refFirstName}`;
+    const b = otherId && bloodRelation(otherId);
+    if (b) return `${AFFINAL_VERB[u.status] || "partner of"} ${refFirstName}'s ${b}`;
+  }
+  return null;
+}
+
 // ---------------------------------------------------------------------------
 // Rendering helpers
 // ---------------------------------------------------------------------------
@@ -300,13 +420,14 @@ function subLine(p) {
   return bits.join(" · ");
 }
 
-function personCard(p, relTag) {
+function personCard(p, relTag, subExtra) {
   const sub = subLine(p);
   return `<a class="pcard ${p.unknown ? "unknown" : ""}" href="#/p/${p.id}">
     <div class="avatar small ${avatarClass(p)}">${initials(p)}</div>
     <div>
       <div class="pname">${esc(p.name)}</div>
       ${sub ? `<div class="psub">${esc(sub)}</div>` : ""}
+      ${subExtra ? `<div class="psub">${esc(subExtra)}</div>` : ""}
     </div>
     ${relTag ? `<span class="rel-tag">${esc(relTag)}</span>` : ""}
   </a>`;
@@ -339,16 +460,22 @@ function renderPerson(id) {
   if (!p) return `<p class="empty">Person not found: ${esc(id)}</p>`;
 
   const facts = [];
-  if (p.born) facts.push(["Born", p.born + (p.birthPlace ? ` — ${p.birthPlace}` : "")]);
-  else if (p.birthPlace) facts.push(["Birthplace", p.birthPlace]);
-  if (p.died) facts.push(["Died", p.died]);
+  const by = yearOf(p.born), dy = yearOf(p.died);
+  if (p.born) {
+    let v = String(p.born) + (p.birthPlace ? ` — ${p.birthPlace}` : "");
+    if (by && !p.died) v += ` (age ~${CURRENT_YEAR - by})`;
+    facts.push(["Born", v]);
+  } else if (p.birthPlace) facts.push(["Birthplace", p.birthPlace]);
+  if (p.died) facts.push(["Died", String(p.died) + (by && dy ? ` (aged ~${dy - by})` : "")]);
   if (p.location) facts.push(["Lives in", p.location]);
   if (p.occupation) facts.push(["Occupation", p.occupation]);
 
+  const rel = relationTo(id);
   let html = `<div class="profile">
     <div class="avatar ${avatarClass(p)}">${initials(p)}</div>
     <div>
       <h2>${esc(p.name)}</h2>
+      ${rel ? `<div class="kinship">${esc(rel)}</div>` : ""}
       ${facts.length ? `<dl class="facts">${facts.map(([k, v]) =>
         `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
       ${p.notes ? `<div class="notes">${esc(p.notes)}</div>` : ""}
@@ -356,11 +483,12 @@ function renderPerson(id) {
     </div>
   </div>`;
 
-  // Parents & grandparents
-  html += cardsSection("Parents", parentsOf(id).map(x => [x]));
-  html += cardsSection("Grandparents", grandparentsOf(id).map(x => [x]));
+  // Immediate family first
+  const parents = parentsOf(id);
+  html += parents.length
+    ? cardsSection("Parents", parents.map(x => [x]))
+    : `<section><h3>Parents</h3><p class="empty">Not recorded yet — add them in data.js.</p></section>`;
 
-  // Siblings (full + half)
   const sibs = siblingsOf(id);
   const sibEntries = [
     ...sibs.full.map(x => [x]),
@@ -388,6 +516,15 @@ function renderPerson(id) {
     }
     html += `</section>`;
   }
+
+  // Extended family
+  html += cardsSection("Grandparents", grandparentsOf(id).map(x => [x]));
+  const auntsUncles = auntsUnclesOf(id);
+  html += cardsSection("Aunts & Uncles", auntsUncles.map(x => [x]));
+  const niblings = dedupe([...sibs.full, ...sibs.half].flatMap(s => childrenOf(s.id)));
+  html += cardsSection("Nieces & Nephews", niblings.map(x => [x]));
+  const cousins = dedupe(auntsUncles.flatMap(a => childrenOf(a.id)));
+  html += cardsSection("Cousins", cousins.map(x => [x]));
 
   return html;
 }
@@ -440,10 +577,21 @@ function renderTree() {
 
 function renderAll() {
   const sorted = [...PEOPLE].sort((a, b) => a.name.localeCompare(b.name));
-  return `<section>
-    <h3>Everyone (${sorted.length})</h3>
-    <div class="all-grid">${sorted.map(p => personCard(p)).join("")}</div>
+  const known = sorted.filter(p => !p.unknown);
+  const placeholders = sorted.filter(p => p.unknown);
+  const card = p => personCard(p, null, relationTo(p.id));
+  let html = `<section>
+    <h3>Everyone (${known.length})</h3>
+    <div class="all-grid">${known.map(card).join("")}</div>
   </section>`;
+  if (placeholders.length) {
+    html += `<section>
+      <h3>Still to identify (${placeholders.length})</h3>
+      <p class="empty">Relatives we know exist but whose names or details are missing — edit data.js to fill them in.</p>
+      <div class="all-grid">${placeholders.map(card).join("")}</div>
+    </section>`;
+  }
+  return html;
 }
 
 // ---------------------------------------------------------------------------
@@ -453,16 +601,21 @@ const app = document.getElementById("app");
 
 function route() {
   const hash = location.hash || "#/";
-  let html;
+  let html, title = "Gan Family Tree";
   if (hash.startsWith("#/p/")) {
-    html = renderPerson(hash.slice(4));
+    const id = hash.slice(4);
+    html = renderPerson(id);
+    if (byId[id]) title = `${byId[id].name} · Gan Family Tree`;
   } else if (hash === "#/tree") {
     html = renderTree();
+    title = "Full tree · Gan Family Tree";
   } else if (hash === "#/all") {
     html = renderAll();
+    title = "Everyone · Gan Family Tree";
   } else {
     html = renderPerson(HOME_PERSON);
   }
+  document.title = title;
   app.innerHTML = html;
   window.scrollTo(0, 0);
 }
@@ -474,26 +627,74 @@ route();
 // ---------------------------------------------------------------------------
 const searchInput = document.getElementById("search");
 const searchResults = document.getElementById("search-results");
+let searchMatches = [];
+let searchIndex = -1;
+
+function closeSearch() {
+  searchResults.classList.remove("open");
+  searchMatches = [];
+  searchIndex = -1;
+}
+
+function paintSearch() {
+  searchResults.innerHTML = searchMatches.length
+    ? searchMatches.map((p, i) => {
+        const sub = relationTo(p.id) || subLine(p);
+        return `<a href="#/p/${p.id}" class="${i === searchIndex ? "active" : ""}">${esc(p.name)}${sub ? `<div class="sub">${esc(sub)}</div>` : ""}</a>`;
+      }).join("")
+    : `<a>No matches</a>`;
+  searchResults.classList.add("open");
+}
 
 searchInput.addEventListener("input", () => {
   const q = searchInput.value.trim().toLowerCase();
-  if (!q) { searchResults.classList.remove("open"); return; }
-  const matches = PEOPLE.filter(p =>
+  if (!q) { closeSearch(); return; }
+  searchMatches = PEOPLE.filter(p =>
     p.name.toLowerCase().includes(q) ||
     (p.location && p.location.toLowerCase().includes(q)) ||
     (p.occupation && p.occupation.toLowerCase().includes(q))
   ).slice(0, 8);
-  searchResults.innerHTML = matches.length
-    ? matches.map(p => `<a href="#/p/${p.id}">${esc(p.name)}${subLine(p) ? `<div class="sub">${esc(subLine(p))}</div>` : ""}</a>`).join("")
-    : `<a>No matches</a>`;
-  searchResults.classList.add("open");
+  searchIndex = searchMatches.length ? 0 : -1;
+  paintSearch();
 });
+
+searchInput.addEventListener("keydown", e => {
+  if (!searchMatches.length) {
+    if (e.key === "Escape") { closeSearch(); searchInput.blur(); }
+    return;
+  }
+  if (e.key === "ArrowDown") {
+    e.preventDefault();
+    searchIndex = (searchIndex + 1) % searchMatches.length;
+    paintSearch();
+  } else if (e.key === "ArrowUp") {
+    e.preventDefault();
+    searchIndex = (searchIndex - 1 + searchMatches.length) % searchMatches.length;
+    paintSearch();
+  } else if (e.key === "Enter" && searchIndex >= 0) {
+    e.preventDefault();
+    location.hash = `#/p/${searchMatches[searchIndex].id}`;
+    closeSearch();
+    searchInput.value = "";
+    searchInput.blur();
+  } else if (e.key === "Escape") {
+    closeSearch();
+    searchInput.blur();
+  }
+});
+
 searchResults.addEventListener("click", () => {
-  searchResults.classList.remove("open");
+  closeSearch();
   searchInput.value = "";
 });
 document.addEventListener("click", e => {
-  if (!e.target.closest(".search-wrap")) searchResults.classList.remove("open");
+  if (!e.target.closest(".search-wrap")) closeSearch();
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "/" && document.activeElement !== searchInput) {
+    e.preventDefault();
+    searchInput.focus();
+  }
 });
 </script>
 </body>

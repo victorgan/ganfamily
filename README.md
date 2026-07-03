@@ -8,12 +8,18 @@ with any static host (GitHub Pages, etc.). No build step, no database.
 ## Features
 
 - **Person pages** — click anyone to see their details plus parents,
-  grandparents, siblings (half-siblings labelled), partners, and children.
+  grandparents, siblings (half-siblings labelled), partners, children,
+  aunts & uncles, cousins, and nieces & nephews.
+- **Kinship labels** — every person shows how they relate to the home person
+  ("Victor's paternal uncle", "married to Victor's sister"), computed
+  automatically from the tree, including in-law and divorced relationships.
 - **Relationship support** — marriages, partners, divorces/separations, and
   remarriages; children are attached to the specific couple, so half-siblings
   and blended families render correctly.
 - **Full tree view** — descendant trees from the earliest known ancestors.
-- **Search** — by name, location, or occupation.
+- **Search** — by name, location, or occupation; press `/` to jump to the
+  search box, arrow keys + Enter to pick a result.
+- **Ages** — computed automatically from birth (and death) years.
 - **Unknown placeholders** — dashed cards mark relatives whose details still
   need to be filled in.
 
