@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gan Family Tree</title>
+<style>
+  :root {
+    --bg: #f6f4ef;
+    --card: #ffffff;
+    --ink: #2b2b2b;
+    --muted: #7a7a72;
+    --accent: #2f6f4f;
+    --accent-soft: #e3efe8;
+    --line: #e4e1d8;
+    --male: #3b6ea5;
+    --female: #a5527a;
+    --chip-married: #2f6f4f;
+    --chip-divorced: #a05a2c;
+    --chip-partner: #5a5aa0;
+    --chip-widowed: #6b6b6b;
+    --radius: 14px;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  header {
+    background: var(--card);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  header h1 { font-size: 1.15rem; margin: 0; }
+  header h1 a { color: var(--ink); }
+  header nav { display: flex; gap: 14px; font-size: 0.95rem; }
+
+  .search-wrap { position: relative; margin-left: auto; }
+  .search-wrap input {
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    width: 220px;
+    background: var(--bg);
+  }
+  .search-results {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    width: 280px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    overflow: hidden;
+    display: none;
+  }
+  .search-results.open { display: block; }
+  .search-results a {
+    display: block;
+    padding: 9px 14px;
+    color: var(--ink);
+    border-bottom: 1px solid var(--line);
+  }
+  .search-results a:last-child { border-bottom: none; }
+  .search-results a:hover { background: var(--accent-soft); text-decoration: none; }
+  .search-results .sub { font-size: 0.8rem; color: var(--muted); }
+
+  main { max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+  /* ---- Person profile ---- */
+  .profile {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 24px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+  .avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; font-weight: 600; color: #fff;
+    flex-shrink: 0;
+  }
+  .avatar.m { background: var(--male); }
+  .avatar.f { background: var(--female); }
+  .avatar.u { background: #9a9a90; }
+  .avatar.small { width: 44px; height: 44px; font-size: 0.95rem; }
+  .profile h2 { margin: 0 0 4px; font-size: 1.5rem; }
+  .facts { display: grid; grid-template-columns: auto 1fr; gap: 2px 14px; margin-top: 10px; font-size: 0.95rem; }
+  .facts dt { color: var(--muted); }
+  .facts dd { margin: 0; }
+  .notes { margin-top: 12px; font-size: 0.92rem; color: var(--muted); font-style: italic; }
+  .unknown-banner {
+    margin-top: 10px;
+    font-size: 0.85rem;
+    color: var(--chip-divorced);
+    background: #f7ecdf;
+    border-radius: 8px;
+    padding: 6px 10px;
+    display: inline-block;
+  }
+
+  /* ---- Sections ---- */
+  section { margin-top: 28px; }
+  section > h3 {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin: 0 0 10px;
+  }
+  .cards { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .pcard {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 16px 10px 10px;
+    color: var(--ink);
+    min-width: 220px;
+    transition: box-shadow 0.12s, transform 0.12s;
+  }
+  .pcard:hover { text-decoration: none; box-shadow: 0 4px 14px rgba(0,0,0,0.1); transform: translateY(-1px); }
+  .pcard.unknown { border-style: dashed; background: transparent; }
+  .pcard .pname { font-weight: 600; font-size: 0.98rem; }
+  .pcard .psub { font-size: 0.8rem; color: var(--muted); }
+  .rel-tag {
+    font-size: 0.7rem;
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 1px 8px;
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* ---- Union blocks ---- */
+  .union {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .union-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
+  .chip {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    border-radius: 999px;
+    padding: 2px 10px;
+  }
+  .chip.married, .chip.remarried { background: var(--chip-married); }
+  .chip.divorced, .chip.separated { background: var(--chip-divorced); }
+  .chip.partner { background: var(--chip-partner); }
+  .chip.widowed { background: var(--chip-widowed); }
+  .union .children-label { font-size: 0.8rem; color: var(--muted); margin: 10px 0 6px; }
+
+  /* ---- Tree view ---- */
+  .tree-root { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 24px; margin-bottom: 20px; }
+  .tree-root > h3 { margin: 0 0 12px; font-size: 1.05rem; }
+  ul.tree, ul.tree ul { list-style: none; margin: 0; padding-left: 26px; border-left: 2px solid var(--line); }
+  ul.tree { border-left: none; padding-left: 0; }
+  ul.tree li { margin: 6px 0; position: relative; }
+  ul.tree ul li::before {
+    content: "";
+    position: absolute;
+    left: -26px; top: 13px;
+    width: 18px; height: 2px;
+    background: var(--line);
+  }
+  .tree-person { font-weight: 600; }
+  .tree-partner { color: var(--muted); font-size: 0.92rem; }
+  .tree-partner a { color: var(--muted); }
+  .tree-meta { color: var(--muted); font-size: 0.82rem; font-weight: 400; }
+
+  /* ---- All people ---- */
+  .all-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
+
+  .empty { color: var(--muted); font-size: 0.92rem; font-style: italic; }
+
+  @media (max-width: 600px) {
+    .profile { flex-direction: column; }
+    .search-wrap { margin-left: 0; width: 100%; }
+    .search-wrap input { width: 100%; }
+    .search-results { width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1><a href="#/">🌳 Gan Family Tree</a></h1>
+  <nav>
+    <a href="#/tree">Full tree</a>
+    <a href="#/all">Everyone</a>
+  </nav>
+  <div class="search-wrap">
+    <input id="search" type="search" placeholder="Search people…" autocomplete="off">
+    <div id="search-results" class="search-results"></div>
+  </div>
+</header>
+
+<main id="app"></main>
+
+<script src="data.js"></script>
+<script>
+"use strict";
+
+// ---------------------------------------------------------------------------
+// Lookups derived from PEOPLE / UNIONS
+// ---------------------------------------------------------------------------
+const byId = Object.fromEntries(PEOPLE.map(p => [p.id, p]));
+
+function unionsOf(id)   { return UNIONS.filter(u => u.partners.includes(id)); }
+function parentUnion(id){ return UNIONS.find(u => u.children.includes(id)) || null; }
+function parentsOf(id)  { const u = parentUnion(id); return u ? u.partners.map(pid => byId[pid]).filter(Boolean) : []; }
+function childrenOf(id) { return unionsOf(id).flatMap(u => u.children).map(cid => byId[cid]).filter(Boolean); }
+
+function siblingsOf(id) {
+  const own = parentUnion(id);
+  if (!own) return { full: [], half: [] };
+  const full = own.children.filter(c => c !== id).map(c => byId[c]).filter(Boolean);
+  const half = [];
+  for (const parentId of own.partners) {
+    for (const u of unionsOf(parentId)) {
+      if (u === own) continue;
+      for (const c of u.children) {
+        if (c !== id && !own.children.includes(c) && !half.some(h => h.id === c)) {
+          half.push(byId[c]);
+        }
+      }
+    }
+  }
+  return { full, half };
+}
+
+function grandparentsOf(id) {
+  const gps = [];
+  for (const parent of parentsOf(id)) {
+    for (const gp of parentsOf(parent.id)) {
+      if (!gps.some(g => g.id === gp.id)) gps.push(gp);
+    }
+  }
+  return gps;
+}
+
+// ---------------------------------------------------------------------------
+// Rendering helpers
+// ---------------------------------------------------------------------------
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function initials(p) {
+  if (p.unknown) return "?";
+  return p.name.split(/\s+/).map(w => w[0]).slice(0, 2).join("").toUpperCase();
+}
+
+function avatarClass(p) {
+  if (p.unknown) return "u";
+  return p.gender === "M" ? "m" : p.gender === "F" ? "f" : "u";
+}
+
+function lifeSpan(p) {
+  if (!p.born && !p.died) return null;
+  const b = p.born ? `b. ${p.born}` : "b. ?";
+  return p.died ? `${b} – d. ${p.died}` : b;
+}
+
+function subLine(p) {
+  const bits = [];
+  const span = lifeSpan(p);
+  if (span) bits.push(span);
+  if (p.location) bits.push(p.location);
+  return bits.join(" · ");
+}
+
+function personCard(p, relTag) {
+  const sub = subLine(p);
+  return `<a class="pcard ${p.unknown ? "unknown" : ""}" href="#/p/${p.id}">
+    <div class="avatar small ${avatarClass(p)}">${initials(p)}</div>
+    <div>
+      <div class="pname">${esc(p.name)}</div>
+      ${sub ? `<div class="psub">${esc(sub)}</div>` : ""}
+    </div>
+    ${relTag ? `<span class="rel-tag">${esc(relTag)}</span>` : ""}
+  </a>`;
+}
+
+function cardsSection(title, entries) {
+  // entries: array of [person, relTag?]
+  if (!entries.length) return "";
+  return `<section>
+    <h3>${esc(title)}</h3>
+    <div class="cards">${entries.map(([p, tag]) => personCard(p, tag)).join("")}</div>
+  </section>`;
+}
+
+const STATUS_LABEL = {
+  married: "Married", divorced: "Divorced", separated: "Separated",
+  partner: "Partner", widowed: "Widowed",
+};
+
+function unionYears(u) {
+  if (!u.start && !u.end) return "";
+  return ` <span class="tree-meta">(${u.start || "?"}${u.end ? "–" + u.end : ""})</span>`;
+}
+
+// ---------------------------------------------------------------------------
+// Views
+// ---------------------------------------------------------------------------
+function renderPerson(id) {
+  const p = byId[id];
+  if (!p) return `<p class="empty">Person not found: ${esc(id)}</p>`;
+
+  const facts = [];
+  if (p.born) facts.push(["Born", p.born + (p.birthPlace ? ` — ${p.birthPlace}` : "")]);
+  else if (p.birthPlace) facts.push(["Birthplace", p.birthPlace]);
+  if (p.died) facts.push(["Died", p.died]);
+  if (p.location) facts.push(["Lives in", p.location]);
+  if (p.occupation) facts.push(["Occupation", p.occupation]);
+
+  let html = `<div class="profile">
+    <div class="avatar ${avatarClass(p)}">${initials(p)}</div>
+    <div>
+      <h2>${esc(p.name)}</h2>
+      ${facts.length ? `<dl class="facts">${facts.map(([k, v]) =>
+        `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
+      ${p.notes ? `<div class="notes">${esc(p.notes)}</div>` : ""}
+      ${p.unknown ? `<div class="unknown-banner">Details unknown — help fill this in!</div>` : ""}
+    </div>
+  </div>`;
+
+  // Parents & grandparents
+  html += cardsSection("Parents", parentsOf(id).map(x => [x]));
+  html += cardsSection("Grandparents", grandparentsOf(id).map(x => [x]));
+
+  // Siblings (full + half)
+  const sibs = siblingsOf(id);
+  const sibEntries = [
+    ...sibs.full.map(x => [x]),
+    ...sibs.half.map(x => [x, "half-sibling"]),
+  ];
+  html += cardsSection("Siblings", sibEntries);
+
+  // Partners & children, grouped per relationship
+  const unions = unionsOf(id);
+  if (unions.length) {
+    html += `<section><h3>Partners &amp; Children</h3>`;
+    for (const u of unions) {
+      const partner = byId[u.partners.find(x => x !== id)];
+      const kids = u.children.map(c => byId[c]).filter(Boolean);
+      html += `<div class="union">
+        <div class="union-head">
+          ${partner ? personCard(partner) : ""}
+          <span class="chip ${u.status}">${STATUS_LABEL[u.status] || esc(u.status)}</span>
+          ${unionYears(u)}
+        </div>
+        ${kids.length
+          ? `<div class="children-label">Children</div><div class="cards">${kids.map(k => personCard(k)).join("")}</div>`
+          : `<div class="empty">No children recorded.</div>`}
+      </div>`;
+    }
+    html += `</section>`;
+  }
+
+  return html;
+}
+
+function descendantList(personId, covered) {
+  // Renders a person plus (recursively) their unions and children,
+  // marking everyone rendered in `covered` so branches aren't duplicated.
+  const p = byId[personId];
+  if (!p) return "";
+  covered.add(personId);
+  let html = `<li><span class="tree-person"><a href="#/p/${p.id}">${esc(p.name)}</a></span>`;
+  const meta = subLine(p);
+  if (meta) html += ` <span class="tree-meta">${esc(meta)}</span>`;
+
+  const unions = unionsOf(personId);
+  for (const u of unions) {
+    const partner = byId[u.partners.find(x => x !== personId)];
+    if (partner) {
+      covered.add(partner.id);
+      html += `<div class="tree-partner">⚭ <a href="#/p/${partner.id}">${esc(partner.name)}</a>
+        <span class="chip ${u.status}">${STATUS_LABEL[u.status] || esc(u.status)}</span>${unionYears(u)}</div>`;
+    }
+    if (u.children.length) {
+      html += `<ul>${u.children.map(c => descendantList(c, covered)).join("")}</ul>`;
+    }
+  }
+  html += `</li>`;
+  return html;
+}
+
+function renderTree() {
+  // Roots: people with no recorded parents who founded a branch (have
+  // children). A candidate is skipped if it was already rendered inside an
+  // earlier branch (e.g. someone who married in), or if all of its children
+  // are already covered (e.g. the second set of great-grandparents of the
+  // same grandparent couple).
+  const covered = new Set();
+  const roots = PEOPLE.filter(p => !parentUnion(p.id) && childrenOf(p.id).length);
+  let html = "";
+  for (const root of roots) {
+    if (covered.has(root.id)) continue;
+    if (childrenOf(root.id).every(k => covered.has(k.id))) continue;
+    html += `<div class="tree-root">
+      <h3>${esc(root.name)}’s branch</h3>
+      <ul class="tree">${descendantList(root.id, covered)}</ul>
+    </div>`;
+  }
+  return html || `<p class="empty">No tree data.</p>`;
+}
+
+function renderAll() {
+  const sorted = [...PEOPLE].sort((a, b) => a.name.localeCompare(b.name));
+  return `<section>
+    <h3>Everyone (${sorted.length})</h3>
+    <div class="all-grid">${sorted.map(p => personCard(p)).join("")}</div>
+  </section>`;
+}
+
+// ---------------------------------------------------------------------------
+// Router
+// ---------------------------------------------------------------------------
+const app = document.getElementById("app");
+
+function route() {
+  const hash = location.hash || "#/";
+  let html;
+  if (hash.startsWith("#/p/")) {
+    html = renderPerson(hash.slice(4));
+  } else if (hash === "#/tree") {
+    html = renderTree();
+  } else if (hash === "#/all") {
+    html = renderAll();
+  } else {
+    html = renderPerson(HOME_PERSON);
+  }
+  app.innerHTML = html;
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+route();
+
+// ---------------------------------------------------------------------------
+// Search
+// ---------------------------------------------------------------------------
+const searchInput = document.getElementById("search");
+const searchResults = document.getElementById("search-results");
+
+searchInput.addEventListener("input", () => {
+  const q = searchInput.value.trim().toLowerCase();
+  if (!q) { searchResults.classList.remove("open"); return; }
+  const matches = PEOPLE.filter(p =>
+    p.name.toLowerCase().includes(q) ||
+    (p.location && p.location.toLowerCase().includes(q)) ||
+    (p.occupation && p.occupation.toLowerCase().includes(q))
+  ).slice(0, 8);
+  searchResults.innerHTML = matches.length
+    ? matches.map(p => `<a href="#/p/${p.id}">${esc(p.name)}${subLine(p) ? `<div class="sub">${esc(subLine(p))}</div>` : ""}</a>`).join("")
+    : `<a>No matches</a>`;
+  searchResults.classList.add("open");
+});
+searchResults.addEventListener("click", () => {
+  searchResults.classList.remove("open");
+  searchInput.value = "";
+});
+document.addEventListener("click", e => {
+  if (!e.target.closest(".search-wrap")) searchResults.classList.remove("open");
+});
+</script>
+</body>
+</html>
