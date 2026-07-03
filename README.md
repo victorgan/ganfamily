@@ -10,9 +10,9 @@ with any static host (GitHub Pages, etc.). No build step, no database.
 - **Person pages** — click anyone to see their details plus parents,
   grandparents, siblings (half-siblings labelled), partners, children,
   aunts & uncles, cousins, and nieces & nephews.
-- **Kinship labels** — every person shows how they relate to the home person
-  ("Victor's paternal uncle", "married to Victor's sister"), computed
-  automatically from the tree, including in-law and divorced relationships.
+- **Person descriptors** — every person carries a one-line summary of where
+  they fit ("Son of Forest Gan", "Married to Christine Gan"), derived
+  automatically from the tree.
 - **Relationship support** — marriages, partners, divorces/separations, and
   remarriages; children are attached to the specific couple, so half-siblings
   and blended families render correctly.

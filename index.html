@@ -339,10 +339,8 @@ function auntsUnclesOf(id) {
 }
 
 // ---------------------------------------------------------------------------
-// Kinship: describe how anyone relates to the home person (HOME_PERSON)
+// Person descriptors: a neutral one-line summary of who someone is
 // ---------------------------------------------------------------------------
-const REF = HOME_PERSON;
-const refFirstName = byId[REF] ? byId[REF].name.split(" ")[0] : "home";
 const CURRENT_YEAR = new Date().getFullYear();
 
 function yearOf(v) {
@@ -350,94 +348,27 @@ function yearOf(v) {
   return m ? +m[1] : null;
 }
 
-const _ancCache = new Map();
-function ancestorMapOf(id) {
-  // Map of ancestorId -> generations up (self = 0)
-  if (_ancCache.has(id)) return _ancCache.get(id);
-  const map = new Map([[id, 0]]);
-  const queue = [[id, 0]];
-  while (queue.length) {
-    const [cur, d] = queue.shift();
-    const u = parentUnion(cur);
-    if (!u) continue;
-    for (const pid of u.partners) {
-      if (!map.has(pid)) { map.set(pid, d + 1); queue.push([pid, d + 1]); }
-    }
-  }
-  _ancCache.set(id, map);
-  return map;
-}
-
 function gword(p, male, female, neutral) {
   return p.gender === "M" ? male : p.gender === "F" ? female : neutral;
 }
 
-const ORDINAL = ["", "first", "second", "third", "fourth", "fifth"];
-
-function sideOf(ancestorId) {
-  // "paternal"/"maternal" from the home person's perspective
-  for (const parent of parentsOf(REF)) {
-    if (ancestorMapOf(parent.id).has(ancestorId)) {
-      if (parent.gender === "M") return "paternal ";
-      if (parent.gender === "F") return "maternal ";
-    }
-  }
-  return "";
-}
-
-function bloodRelation(pId) {
-  // Relationship word for pId relative to the home person, or null if no
-  // blood link is recorded. Finds the closest common ancestor and converts
-  // the (generations-up, generations-down) pair into English.
-  if (pId === REF || !byId[pId]) return null;
-  const a = ancestorMapOf(REF), b = ancestorMapOf(pId);
-  let best = null;
-  for (const [anc, du] of a) {
-    if (b.has(anc)) {
-      const dv = b.get(anc);
-      if (!best || du + dv < best.du + best.dv) best = { anc, du, dv };
-    }
-  }
-  if (!best) return null;
-  const p = byId[pId];
-  const { anc, du, dv } = best;
-  const greats = n => "great-".repeat(Math.max(0, n));
-  if (dv === 0) { // p is a direct ancestor
-    if (du === 1) return gword(p, "father", "mother", "parent");
-    return sideOf(pId) + greats(du - 2) + gword(p, "grandfather", "grandmother", "grandparent");
-  }
-  if (du === 0) { // p is a direct descendant
-    if (dv === 1) return gword(p, "son", "daughter", "child");
-    return greats(dv - 2) + gword(p, "grandson", "granddaughter", "grandchild");
-  }
-  if (du === 1 && dv === 1) {
-    const half = parentUnion(REF) !== parentUnion(pId) ? "half-" : "";
-    return half + gword(p, "brother", "sister", "sibling");
-  }
-  if (dv === 1) return sideOf(anc) + greats(du - 2) + gword(p, "uncle", "aunt", "uncle/aunt");
-  if (du === 1) return greats(dv - 2) + gword(p, "nephew", "niece", "nephew/niece");
-  const degree = Math.min(du, dv) - 1;
-  const removed = Math.abs(du - dv);
-  let label = (ORDINAL[degree] || degree + "th") + " cousin";
-  if (removed) label += removed === 1 ? " once removed" : removed === 2 ? " twice removed" : ` ${removed}× removed`;
-  return label;
-}
-
-const AFFINAL_VERB = {
-  married: "married to", divorced: "formerly married to",
-  separated: "separated from", partner: "partner of", widowed: "widowed from",
+const PARTNER_VERB = {
+  married: "Married to", divorced: "Formerly married to",
+  separated: "Separated from", partner: "Partner of", widowed: "Widowed from",
 };
 
-function relationTo(pId) {
-  // Full phrase, e.g. "Victor's paternal uncle" or "married to Victor's sister".
-  if (pId === REF) return null;
-  const blood = bloodRelation(pId);
-  if (blood) return `${refFirstName}'s ${blood}`;
-  for (const u of unionsOf(pId)) {
-    const otherId = u.partners.find(x => x !== pId);
-    if (otherId === REF) return `${AFFINAL_VERB[u.status] || "partner of"} ${refFirstName}`;
-    const b = otherId && bloodRelation(otherId);
-    if (b) return `${AFFINAL_VERB[u.status] || "partner of"} ${refFirstName}'s ${b}`;
+function personDescriptor(p) {
+  // "Son of Forest Gan", "Married to Christine Gan", … — parentage first,
+  // falling back to a partner; placeholder people are skipped as anchors.
+  const parents = parentsOf(p.id).filter(x => !x.unknown);
+  if (parents.length) {
+    return `${gword(p, "Son", "Daughter", "Child")} of ${parents.map(x => x.name).join(" and ")}`;
+  }
+  for (const u of unionsOf(p.id)) {
+    const other = byId[u.partners.find(x => x !== p.id)];
+    if (other && !other.unknown) {
+      return `${PARTNER_VERB[u.status] || "Partner of"} ${other.name}`;
+    }
   }
   return null;
 }
@@ -546,7 +477,7 @@ function renderPerson(id) {
   if (p.location) facts.push(["Lives in", p.location]);
   if (p.occupation) facts.push(["Occupation", p.occupation]);
 
-  const rel = relationTo(id);
+  const rel = personDescriptor(p);
   let html = `<div class="profile">
     ${avatarHtml(p)}
     <div>
@@ -659,7 +590,7 @@ function renderAll() {
   const sorted = [...PEOPLE].sort((a, b) => a.name.localeCompare(b.name));
   const known = sorted.filter(p => !p.unknown);
   const placeholders = sorted.filter(p => p.unknown);
-  const card = p => personCard(p, null, relationTo(p.id));
+  const card = p => personCard(p, null, personDescriptor(p));
   let html = `<section>
     <h3>Everyone (${known.length})</h3>
     <div class="all-grid">${known.map(card).join("")}</div>
@@ -719,7 +650,7 @@ function closeSearch() {
 function paintSearch() {
   searchResults.innerHTML = searchMatches.length
     ? searchMatches.map((p, i) => {
-        const sub = relationTo(p.id) || subLine(p);
+        const sub = personDescriptor(p) || subLine(p);
         return `<a href="#/p/${p.id}" class="${i === searchIndex ? "active" : ""}">${esc(p.name)}${sub ? `<div class="sub">${esc(sub)}</div>` : ""}</a>`;
       }).join("")
     : `<a>No matches</a>`;
