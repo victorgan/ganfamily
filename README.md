@@ -65,22 +65,24 @@ To model a divorce with a new partner: give the person two union entries — one
 with `status: "divorced"` (children of that marriage attached there) and one
 with the new partner.
 
-## Assumptions to verify
+## Family structure (confirmed)
 
-The seed list was ambiguous in places; these guesses are marked in `notes`
-fields and should be confirmed or corrected:
+- **Forest Gan** (Victor's paternal grandfather) had five children:
+  **Cheong Koon** (Victor's dad, b. 1950, Mississauga), **Eric** (KL),
+  **Simon** (Purmerend, NL), **Jacqueline**, and **John**.
+- Cousins: **Serene** (Eric's daughter), **Jonathan** (Simon's son),
+  **Maria** (Jacqueline's daughter), **Natalie** and **Stephanie**
+  (John's daughters).
+- **Calvin, Victor, Christine** are Cheong Koon & Cathy's children;
+  Christine (b. 1991, Corner Brook) is married to **Ian McPhee**, son
+  **Nolan**.
 
-1. **Cheong Koon Gan** (b. 1950, Mississauga) is Victor's **dad**, and
-   **Forest Gan** is Victor's paternal **grandfather**.
-2. **Simon** (Purmerend, NL), **Jonathan**, and **Serene** are Cheong Koon's
-   **siblings** (Victor's uncles/aunt) — not Victor's siblings.
-3. **Nolan** is Christine & Ian McPhee's son (surname McPhee assumed).
-4. **Eric** (KL) is Jonathan's son from a first marriage that ended; **Maria**
-   is Jonathan's daughter with his current partner ("Maria's Mom").
-5. **Stephanie** and **Natalie Gan** are Serene & John's daughters — Natalie's
-   "Gan" surname suggests she may belong elsewhere in the tree.
-6. Mom's side: grandfather's family name is **Heng**; all given names on that
-   side are still unknown.
+## Still unknown
+
+1. Names of the aunts'/uncles' partners (the cousins' other parents).
+2. Everything on Mom's side beyond the family name **Heng**.
+3. Grandma Gan's name, and both sets of great-grandparents.
+4. Maria's surname; Nolan's surname (McPhee assumed); most birth years.
 
 ## Hosting on gan.family
 

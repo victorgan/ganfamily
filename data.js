@@ -74,7 +74,8 @@ const PEOPLE = [
   },
 
   // --------------------------------------------------------------------------
-  // Dad's side — Dad and his siblings
+  // Dad's side — the five Gan siblings: Cheong Koon, Eric, Simon,
+  // Jacqueline, and John
   // --------------------------------------------------------------------------
   {
     id: "cheong-koon-gan",
@@ -88,6 +89,17 @@ const PEOPLE = [
     unknown: false,
   },
   {
+    id: "eric-gan",
+    name: "Eric Gan",
+    gender: "M",
+    born: "19XX", died: null,
+    birthPlace: null,
+    location: "Kuala Lumpur, Malaysia",
+    occupation: null,
+    notes: "Victor's uncle. Serene's father.",
+    unknown: false,
+  },
+  {
     id: "simon-gan",
     name: "Simon Gan",
     gender: "M",
@@ -95,25 +107,25 @@ const PEOPLE = [
     birthPlace: null,
     location: "Purmerend, Netherlands",
     occupation: null,
-    notes: "Assumed to be Cheong Koon's brother (Victor's uncle) — confirm.",
+    notes: "Victor's uncle. Jonathan's father.",
     unknown: false,
   },
   {
-    id: "jonathan-gan",
-    name: "Jonathan Gan",
-    gender: "M",
-    born: null, died: null,
-    birthPlace: null, location: null, occupation: null,
-    notes: "Assumed to be Cheong Koon's brother (Victor's uncle) — confirm.",
-    unknown: false,
-  },
-  {
-    id: "serene-gan",
-    name: "Serene Gan",
+    id: "jacqueline-gan",
+    name: "Jacqueline Gan",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Assumed to be Cheong Koon's sister (Victor's aunt) — confirm.",
+    notes: "Victor's aunt. Maria's mother.",
+    unknown: false,
+  },
+  {
+    id: "john-gan",
+    name: "John Gan",
+    gender: "M",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Victor's uncle. Natalie and Stephanie's father.",
     unknown: false,
   },
 
@@ -239,40 +251,56 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Assumed to be Christine and Ian's son — confirm surname.",
+    notes: "Christine and Ian's son — confirm surname.",
     unknown: false,
   },
 
   // --------------------------------------------------------------------------
-  // Jonathan's family (first marriage + current partner)
+  // Cousins (children of the Gan aunts and uncles) and their other parents
   // --------------------------------------------------------------------------
   {
-    id: "erics-mother",
-    name: "Eric's Mother",
+    id: "erics-partner",
+    name: "Serene's Mother",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Jonathan Gan's former partner, Eric's mother. Name unknown — please fill in.",
+    notes: "Eric Gan's partner, Serene's mother. Name unknown — please fill in.",
     unknown: true,
   },
   {
-    id: "eric-gan",
-    name: "Eric Gan",
-    gender: "M",
-    born: "19XX", died: null,
-    birthPlace: null,
-    location: "Kuala Lumpur, Malaysia",
-    occupation: null,
-    notes: "Assumed to be Jonathan's son — confirm.",
-    unknown: false,
-  },
-  {
-    id: "marias-mom",
-    name: "Maria's Mom",
+    id: "serene-gan",
+    name: "Serene Gan",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Jonathan Gan's current partner, Maria's mother. Name unknown — please fill in.",
+    notes: "Victor's cousin — Eric's daughter.",
+    unknown: false,
+  },
+  {
+    id: "simons-partner",
+    name: "Jonathan's Mother",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Simon Gan's partner, Jonathan's mother. Name unknown — please fill in.",
+    unknown: true,
+  },
+  {
+    id: "jonathan-gan",
+    name: "Jonathan Gan",
+    gender: "M",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Victor's cousin — Simon's son.",
+    unknown: false,
+  },
+  {
+    id: "jacquelines-partner",
+    name: "Maria's Father",
+    gender: "M",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Jacqueline Gan's partner, Maria's father. Name unknown — please fill in.",
     unknown: true,
   },
   {
@@ -281,30 +309,17 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Assumed to be Jonathan's daughter with his current partner — confirm.",
-    unknown: false,
-  },
-
-  // --------------------------------------------------------------------------
-  // Serene's family
-  // --------------------------------------------------------------------------
-  {
-    id: "john",
-    name: "John",
-    gender: "M",
-    born: null, died: null,
-    birthPlace: null, location: null, occupation: null,
-    notes: "Serene Gan's husband. Surname unknown — please fill in.",
+    notes: "Victor's cousin — Jacqueline's daughter. Surname unknown.",
     unknown: false,
   },
   {
-    id: "stephanie",
-    name: "Stephanie",
+    id: "johns-partner",
+    name: "Natalie & Stephanie's Mother",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Assumed to be Serene and John's daughter — surname unknown, confirm.",
-    unknown: false,
+    notes: "John Gan's partner, mother of Natalie and Stephanie. Name unknown — please fill in.",
+    unknown: true,
   },
   {
     id: "natalie-gan",
@@ -312,7 +327,16 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Assumed to be Serene and John's daughter — confirm (surname 'Gan' suggests she may belong elsewhere in the tree).",
+    notes: "Victor's cousin — John's daughter.",
+    unknown: false,
+  },
+  {
+    id: "stephanie-gan",
+    name: "Stephanie Gan",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Victor's cousin — John's daughter.",
     unknown: false,
   },
 ];
@@ -325,7 +349,7 @@ const UNIONS = [
 
   // Grandparents → parents' generation
   { id: "u-forest",   partners: ["forest-gan", "grandma-gan"],        status: "married", start: null, end: null,
-    children: ["cheong-koon-gan", "simon-gan", "jonathan-gan", "serene-gan"] },
+    children: ["cheong-koon-gan", "eric-gan", "simon-gan", "jacqueline-gan", "john-gan"] },
   { id: "u-heng",     partners: ["grandpa-heng", "grandma-heng"],     status: "married", start: null, end: null,
     children: ["cathy-gan"] },
 
@@ -337,15 +361,15 @@ const UNIONS = [
   { id: "u-christine-ian", partners: ["christine-gan", "ian-mcphee"], status: "married", start: null, end: null,
     children: ["nolan-mcphee"] },
 
-  // Jonathan: first relationship (ended), then current partner
-  { id: "u-jonathan-ex",    partners: ["jonathan-gan", "erics-mother"], status: "divorced", start: null, end: null,
-    children: ["eric-gan"] },
-  { id: "u-jonathan-maria", partners: ["jonathan-gan", "marias-mom"],   status: "partner",  start: null, end: null,
+  // Aunts/uncles → cousins (spouse names still unknown)
+  { id: "u-eric",       partners: ["eric-gan", "erics-partner"],             status: "married", start: null, end: null,
+    children: ["serene-gan"] },
+  { id: "u-simon",      partners: ["simon-gan", "simons-partner"],           status: "married", start: null, end: null,
+    children: ["jonathan-gan"] },
+  { id: "u-jacqueline", partners: ["jacqueline-gan", "jacquelines-partner"], status: "married", start: null, end: null,
     children: ["maria"] },
-
-  // Serene + John
-  { id: "u-serene-john", partners: ["serene-gan", "john"], status: "married", start: null, end: null,
-    children: ["stephanie", "natalie-gan"] },
+  { id: "u-john",       partners: ["john-gan", "johns-partner"],             status: "married", start: null, end: null,
+    children: ["natalie-gan", "stephanie-gan"] },
 ];
 
 // The person shown when the site first loads.
