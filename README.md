@@ -67,9 +67,10 @@ with the new partner.
 
 ## Family structure (confirmed)
 
-- **Forest Gan** (Victor's paternal grandfather) had five children:
-  **Cheong Koon** (Victor's dad, b. 1950, Mississauga), **Eric** (KL),
-  **Simon** (Purmerend, NL), **Jacqueline**, and **John**.
+- Victor's paternal grandparents (names unknown) had six children, in birth
+  order: **Forest** (eldest), **Eric** (KL) and **Simon** (Purmerend, NL) —
+  order between them unconfirmed — **Cheong Koon** (Victor's dad, b. 1950,
+  Mississauga), **John** (youngest brother), and **Jacqueline** (youngest).
 - Cousins: **Serene** (Eric's daughter), **Jonathan** (Simon's son),
   **Maria** (Jacqueline's daughter), **Natalie** and **Stephanie**
   (John's daughters).
