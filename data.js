@@ -74,9 +74,8 @@ const PEOPLE = [
   },
 
   // --------------------------------------------------------------------------
-  // Dad's side — the six Gan siblings, in birth order: Forest (eldest),
-  // Eric and Simon (order unconfirmed), Cheong Koon (4th), John (youngest
-  // brother), Jacqueline (youngest)
+  // Dad's side — the eight Gan siblings, in birth order: Forest, two
+  // unknown siblings, Cheong Koon, Simon, Eric, John, Jacqueline
   // --------------------------------------------------------------------------
   {
     id: "forest-gan",
@@ -84,8 +83,26 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's uncle — eldest of the six Gan siblings.",
+    notes: "Victor's uncle — eldest of the eight Gan siblings.",
     unknown: false,
+  },
+  {
+    id: "gan-sibling-2",
+    name: "Gan Sibling (2nd oldest)",
+    gender: null,
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Second-oldest of the eight Gan siblings. Name and details unknown — please fill in.",
+    unknown: true,
+  },
+  {
+    id: "gan-sibling-3",
+    name: "Gan Sibling (3rd oldest)",
+    gender: null,
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Third-oldest of the eight Gan siblings. Name and details unknown — please fill in.",
+    unknown: true,
   },
   {
     id: "cheong-koon-gan",
@@ -95,7 +112,7 @@ const PEOPLE = [
     birthPlace: null,
     location: "Mississauga, Ontario, Canada",
     occupation: null,
-    notes: "Victor's dad. Fourth-oldest of the six Gan siblings.",
+    notes: "Victor's dad. Fourth-oldest of the eight Gan siblings.",
     unknown: false,
   },
   {
@@ -106,7 +123,7 @@ const PEOPLE = [
     birthPlace: null,
     location: "Kuala Lumpur, Malaysia",
     occupation: null,
-    notes: "Victor's uncle. Serene's father. Second- or third-oldest sibling (order with Simon unconfirmed).",
+    notes: "Victor's uncle. Serene's father. Sixth-oldest of the eight Gan siblings.",
     unknown: false,
   },
   {
@@ -117,7 +134,7 @@ const PEOPLE = [
     birthPlace: null,
     location: "Purmerend, Netherlands",
     occupation: null,
-    notes: "Victor's uncle. Jonathan's father. Second- or third-oldest sibling (order with Eric unconfirmed).",
+    notes: "Victor's uncle. Jonathan's father. Fifth-oldest of the eight Gan siblings.",
     unknown: false,
   },
   {
@@ -126,7 +143,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's aunt. Maria's mother. Youngest of the six Gan siblings.",
+    notes: "Victor's aunt. Maria's mother. Youngest of the eight Gan siblings.",
     unknown: false,
   },
   {
@@ -135,7 +152,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's uncle. Natalie and Stephanie's father. Youngest of the five Gan brothers.",
+    notes: "Victor's uncle. Natalie and Stephanie's father. Seventh-oldest sibling and youngest Gan brother.",
     unknown: false,
   },
 
@@ -357,10 +374,9 @@ const UNIONS = [
   { id: "u-gg-heng",  partners: ["gg-heng-father", "gg-heng-mother"], status: "married", start: null, end: null, children: ["grandpa-heng"] },
   { id: "u-gg-mgm",   partners: ["gg-mgm-father", "gg-mgm-mother"],   status: "married", start: null, end: null, children: ["grandma-heng"] },
 
-  // Grandparents → parents' generation (children listed in birth order;
-  // Eric/Simon order unconfirmed)
+  // Grandparents → parents' generation (children listed in birth order)
   { id: "u-gan-gp",   partners: ["grandpa-gan", "grandma-gan"],       status: "married", start: null, end: null,
-    children: ["forest-gan", "eric-gan", "simon-gan", "cheong-koon-gan", "john-gan", "jacqueline-gan"] },
+    children: ["forest-gan", "gan-sibling-2", "gan-sibling-3", "cheong-koon-gan", "simon-gan", "eric-gan", "john-gan", "jacqueline-gan"] },
   { id: "u-heng",     partners: ["grandpa-heng", "grandma-heng"],     status: "married", start: null, end: null,
     children: ["cathy-gan"] },
 

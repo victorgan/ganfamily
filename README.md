@@ -67,10 +67,10 @@ with the new partner.
 
 ## Family structure (confirmed)
 
-- Victor's paternal grandparents (names unknown) had six children, in birth
-  order: **Forest** (eldest), **Eric** (KL) and **Simon** (Purmerend, NL) —
-  order between them unconfirmed — **Cheong Koon** (Victor's dad, b. 1950,
-  Mississauga), **John** (youngest brother), and **Jacqueline** (youngest).
+- Victor's paternal grandparents (names unknown) had eight children, in birth
+  order: **Forest** (eldest), two siblings still to identify, **Cheong Koon**
+  (Victor's dad, b. 1950, Mississauga), **Simon** (Purmerend, NL), **Eric**
+  (KL), **John** (youngest brother), and **Jacqueline** (youngest).
 - Cousins: **Serene** (Eric's daughter), **Jonathan** (Simon's son),
   **Maria** (Jacqueline's daughter), **Natalie** and **Stephanie**
   (John's daughters).
