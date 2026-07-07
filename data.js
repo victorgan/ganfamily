@@ -400,4 +400,4 @@ const UNIONS = [
 ];
 
 // The person shown when the site first loads.
-const HOME_PERSON = "victor-gan";
+const HOME_PERSON = "grandma-gan";
