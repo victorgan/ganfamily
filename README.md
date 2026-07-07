@@ -71,9 +71,11 @@ with the new partner.
   order: **Forest** (eldest), two siblings still to identify, **Cheong Koon**
   (Victor's dad, b. 1950, Mississauga), **Simon** (Purmerend, NL), **Eric**
   (KL), **John** (youngest brother), and **Jacqueline** (youngest).
-- Cousins: **Serene** (Eric's daughter), **Jonathan** (Simon's son),
-  **Maria** (Jacqueline's daughter), **Natalie** and **Stephanie**
-  (John's daughters).
+- Cousins: **Serene** and **Elaine** (Eric's daughters), **Jonathan**
+  (Simon's son), **Maria** (Jacqueline's daughter), **Natalie** and
+  **Stephanie** (John's daughters), **Tinie**, **Michael**, and **M?**
+  (the 2nd-oldest brother's children), and the 3rd-oldest brother's son
+  (name unknown).
 - **Calvin, Victor, Christine** are Cheong Koon & Cathy's children;
   Christine (b. 1991, Corner Brook) is married to **Ian McPhee**, son
   **Nolan**.
