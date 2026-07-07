@@ -316,6 +316,15 @@ const PEOPLE = [
     unknown: false,
   },
   {
+    id: "soo-neoh",
+    name: "Soo Neoh",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Cathy's second youngest sister.",
+    unknown: false,
+  },
+  {
     id: "cathy-gan",
     name: "Cathy Gan",
     gender: "F",
@@ -554,7 +563,7 @@ const UNIONS = [
   { id: "u-gan-gp",   partners: ["grandpa-gan", "grandma-gan"],       status: "married", start: null, end: null,
     children: ["forest-gan", "gan-sibling-2", "gan-sibling-3", "cheong-koon-gan", "simon-gan", "eric-gan", "john-gan", "jacqueline-gan"] },
   { id: "u-neoh",     partners: ["grandpa-neoh", "grandma-neoh"],     status: "married", start: null, end: null,
-    children: ["heng-neoh", "cathy-gan"] },
+    children: ["heng-neoh", "soo-neoh", "cathy-gan"] },
 
   // Parents → Victor's generation
   { id: "u-cheong-cathy", partners: ["cheong-koon-gan", "cathy-gan"], status: "married", start: null, end: null,
