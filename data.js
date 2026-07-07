@@ -516,12 +516,12 @@ const PEOPLE = [
   },
   {
     id: "johns-partner",
-    name: "Natalie & Stephanie's Mother",
+    name: "Diane Gan",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "John Gan's partner, mother of Natalie and Stephanie. Name unknown — please fill in.",
-    unknown: true,
+    notes: "John Gan's wife; mother of Natalie and Stephanie. Maiden name unknown.",
+    unknown: false,
   },
   {
     id: "natalie-gan",
