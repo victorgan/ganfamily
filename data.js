@@ -157,6 +157,91 @@ const PEOPLE = [
   },
 
   // --------------------------------------------------------------------------
+  // Lim branch — Grandpa Gan's sister married a Lim; her son is Han Tiong Lim
+  // --------------------------------------------------------------------------
+  {
+    id: "gan-grandaunt",
+    name: "Grandaunt Gan",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Grandpa Gan's sister, Han Tiong Lim's mother. Name unknown — please fill in.",
+    unknown: true,
+  },
+  {
+    id: "lim-grandfather",
+    name: "Grandfather Lim",
+    gender: "M",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Han Tiong Lim's father, husband of Grandpa Gan's sister. Name unknown — please fill in.",
+    unknown: true,
+  },
+  {
+    id: "han-tiong-lim",
+    name: "Han Tiong Lim",
+    gender: "M",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Son of Grandpa Gan's sister — first cousin of Cheong Koon's generation.",
+    unknown: false,
+  },
+  {
+    id: "irene-lim",
+    name: "Irene Lim",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Han Tiong Lim's wife; mother of Kevin, Kristen, and Travis.",
+    unknown: false,
+  },
+  {
+    id: "kevin-lim",
+    name: "Kevin Lim",
+    gender: "M",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Oldest of Han Tiong and Irene's three children.",
+    unknown: false,
+  },
+  {
+    id: "kristen-lim",
+    name: "Kristen Lim",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Middle child of Han Tiong and Irene.",
+    unknown: false,
+  },
+  {
+    id: "travis-lim",
+    name: "Travis Lim",
+    gender: "M",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Youngest of Han Tiong and Irene's three children.",
+    unknown: false,
+  },
+  {
+    id: "fiona",
+    name: "Fiona",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Travis Lim's wife. Surname unknown — please fill in.",
+    unknown: false,
+  },
+  {
+    id: "henry-lim",
+    name: "Henry Lim",
+    gender: "M",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Travis and Fiona's son.",
+    unknown: false,
+  },
+
+  // --------------------------------------------------------------------------
   // Mom's side — great-grandparents
   // --------------------------------------------------------------------------
   {
@@ -432,8 +517,9 @@ const PEOPLE = [
 ];
 
 const UNIONS = [
-  // Great-grandparents → grandparents
-  { id: "u-gg-gan",   partners: ["gg-gan-father", "gg-gan-mother"],   status: "married", start: null, end: null, children: ["grandpa-gan"] },
+  // Great-grandparents → grandparents (Grandpa Gan and his sister; birth
+  // order between them unknown)
+  { id: "u-gg-gan",   partners: ["gg-gan-father", "gg-gan-mother"],   status: "married", start: null, end: null, children: ["grandpa-gan", "gan-grandaunt"] },
   { id: "u-gg-heng",  partners: ["gg-heng-father", "gg-heng-mother"], status: "married", start: null, end: null, children: ["grandpa-heng"] },
   { id: "u-gg-mgm",   partners: ["gg-mgm-father", "gg-mgm-mother"],   status: "married", start: null, end: null, children: ["grandma-heng"] },
 
@@ -458,6 +544,14 @@ const UNIONS = [
     children: ["tinie-gan", "michael-gan", "m-gan"] },
   { id: "u-sibling3",   partners: ["gan-sibling-3", "sibling3-partner"],     status: "married", start: null, end: null,
     children: ["sibling3-son"] },
+
+  // Lim branch
+  { id: "u-lim-gp",       partners: ["lim-grandfather", "gan-grandaunt"], status: "married", start: null, end: null,
+    children: ["han-tiong-lim"] },
+  { id: "u-han-irene",    partners: ["han-tiong-lim", "irene-lim"],       status: "married", start: null, end: null,
+    children: ["kevin-lim", "kristen-lim", "travis-lim"] },
+  { id: "u-travis-fiona", partners: ["travis-lim", "fiona"],              status: "married", start: null, end: null,
+    children: ["henry-lim"] },
   { id: "u-simon",      partners: ["simon-gan", "simons-partner"],           status: "married", start: null, end: null,
     children: ["jonathan-gan"] },
   { id: "u-jacqueline", partners: ["jacqueline-gan", "jacquelines-partner"], status: "married", start: null, end: null,

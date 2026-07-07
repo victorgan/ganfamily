@@ -79,6 +79,10 @@ with the new partner.
 - **Calvin, Victor, Christine** are Cheong Koon & Cathy's children;
   Christine (b. 1991, Corner Brook) is married to **Ian McPhee**, son
   **Nolan**.
+- **Lim branch**: Grandpa Gan's sister (name unknown) married a Lim; their
+  son **Han Tiong Lim** married **Irene** — children **Kevin** (oldest),
+  **Kristen** (middle), **Travis** (youngest). Travis is married to
+  **Fiona**, son **Henry**.
 
 ## Still unknown
 
