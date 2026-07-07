@@ -520,7 +520,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "John Gan's wife; mother of Natalie and Stephanie. Maiden name unknown.",
+    notes: "Mother of Natalie and Stephanie; she and John Gan are divorced. Maiden name unknown.",
     unknown: false,
   },
   {
@@ -585,7 +585,7 @@ const UNIONS = [
     children: ["maria"] },
   { id: "u-maria-erik", partners: ["maria", "erik"],                         status: "married", start: null, end: null,
     children: ["jayden"] },
-  { id: "u-john",       partners: ["john-gan", "johns-partner"],             status: "married", start: null, end: null,
+  { id: "u-john",       partners: ["john-gan", "johns-partner"],             status: "divorced", start: null, end: null,
     children: ["natalie-gan", "stephanie-gan"] },
 ];
 
