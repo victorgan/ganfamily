@@ -17,10 +17,6 @@
     --line: #e4e1d8;
     --male: #3b6ea5;
     --female: #a5527a;
-    --chip-married: #2f6f4f;
-    --chip-divorced: #a05a2c;
-    --chip-partner: #5a5aa0;
-    --chip-widowed: #6b6b6b;
     --warn-ink: #a05a2c;
     --warn-bg: #f7ecdf;
     --radius: 14px;
@@ -198,19 +194,7 @@
     margin-bottom: 12px;
   }
   .union-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 4px; }
-  .chip {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: #fff;
-    border-radius: 999px;
-    padding: 2px 10px;
-  }
-  .chip.married, .chip.remarried { background: var(--chip-married); }
-  .chip.divorced, .chip.separated { background: var(--chip-divorced); }
-  .chip.partner { background: var(--chip-partner); }
-  .chip.widowed { background: var(--chip-widowed); }
+  .union-verb { font-size: 0.9rem; color: var(--muted); }
   .union .children-label { font-size: 0.8rem; color: var(--muted); margin: 10px 0 6px; }
 
   /* ---- Pedigree chart ---- */
@@ -449,11 +433,6 @@ function pedNode(id, depth) {
   return html;
 }
 
-const STATUS_LABEL = {
-  married: "Married", divorced: "Divorced", separated: "Separated",
-  partner: "Partner", widowed: "Widowed",
-};
-
 function unionYears(u) {
   if (!u.start && !u.end) return "";
   return ` <span class="tree-meta">(${u.start || "?"}${u.end ? "–" + u.end : ""})</span>`;
@@ -517,8 +496,8 @@ function renderPerson(id) {
       const kids = u.children.map(c => byId[c]).filter(Boolean);
       html += `<div class="union">
         <div class="union-head">
+          <span class="union-verb">${esc(PARTNER_VERB[u.status] || "Partner of")}</span>
           ${partner ? personCard(partner) : ""}
-          <span class="chip ${u.status}">${STATUS_LABEL[u.status] || esc(u.status)}</span>
           ${unionYears(u)}
         </div>
         ${kids.length
@@ -555,8 +534,7 @@ function descendantList(personId, covered) {
     const partner = byId[u.partners.find(x => x !== personId)];
     if (partner) {
       covered.add(partner.id);
-      html += `<div class="tree-partner">⚭ <a href="#/p/${partner.id}">${esc(partner.name)}</a>
-        <span class="chip ${u.status}">${STATUS_LABEL[u.status] || esc(u.status)}</span>${unionYears(u)}</div>`;
+      html += `<div class="tree-partner">⚭ <a href="#/p/${partner.id}">${esc(partner.name)}</a>${unionYears(u)}</div>`;
     }
     if (u.children.length) {
       html += `<ul>${u.children.map(c => descendantList(c, covered)).join("")}</ul>`;
