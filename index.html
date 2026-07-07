@@ -8,38 +8,38 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌳</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,450;9..144,550;9..144,650&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #faf9f5;
-    --card: #ffffff;
-    --ink: #1f1e1b;
-    --muted: #87867f;
-    --accent: #c15f3c;
-    --accent-soft: #f4e9e3;
-    --line: #e8e6de;
-    --male: #5e7f9e;
-    --female: #b07488;
-    --warn-ink: #a05a2c;
-    --warn-bg: #f7ecdf;
-    --radius: 16px;
-    --serif: "Lora", Georgia, "Times New Roman", serif;
-    --shadow: 0 1px 2px rgba(60, 50, 30, 0.04), 0 4px 16px rgba(60, 50, 30, 0.06);
+    --bg: #f4eee1;
+    --card: #fdfaf2;
+    --ink: #2a2620;
+    --muted: #8d8574;
+    --accent: #a93c26;
+    --accent-soft: #f1e0d8;
+    --line: #ddd4c0;
+    --male: #4e6e77;
+    --female: #a1616b;
+    --warn-ink: #8c5a24;
+    --warn-bg: #f3e7cf;
+    --radius: 14px;
+    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --shadow: 0 1px 2px rgba(80, 60, 20, 0.05), 0 5px 18px rgba(80, 60, 20, 0.07);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #262624;
-      --card: #30302e;
-      --ink: #e8e6e1;
-      --muted: #a2a09a;
-      --accent: #d97757;
-      --accent-soft: #453529;
-      --line: #3e3d3a;
-      --male: #7a97b2;
-      --female: #bc8298;
-      --warn-ink: #e0a375;
-      --warn-bg: #3e3226;
-      --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 4px 16px rgba(0, 0, 0, 0.25);
+      --bg: #23201b;
+      --card: #2d2a24;
+      --ink: #eae4d5;
+      --muted: #a49b87;
+      --accent: #d96a4a;
+      --accent-soft: #47352c;
+      --line: #423d33;
+      --male: #7695a0;
+      --female: #b98089;
+      --warn-ink: #d9a878;
+      --warn-bg: #3d3527;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 5px 18px rgba(0, 0, 0, 0.3);
     }
   }
   * { box-sizing: border-box; }
@@ -73,12 +73,24 @@
   header h1 {
     font-family: var(--serif);
     font-size: 1.25rem;
-    font-weight: 600;
+    font-weight: 650;
     letter-spacing: 0.01em;
     margin: 0;
   }
-  header h1 a { color: var(--ink); }
+  header h1 a { color: var(--ink); display: inline-flex; align-items: center; gap: 10px; }
   header h1 a:hover { text-decoration: none; color: var(--accent); }
+  .seal {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: #fdfaf2;
+    border-radius: 7px;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    box-shadow: inset 0 0 0 1.5px rgba(253, 250, 242, 0.35);
+  }
   header nav { display: flex; gap: 16px; font-size: 0.92rem; }
   header nav a { color: var(--muted); }
   header nav a:hover { color: var(--accent); text-decoration: none; }
@@ -131,28 +143,39 @@
     border: 1px solid var(--line);
     border-radius: var(--radius);
     box-shadow: var(--shadow);
-    padding: 28px;
+    padding: 30px;
     display: flex;
     gap: 22px;
     align-items: flex-start;
+    position: relative;
+  }
+  .profile::after {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius) - 6px);
+    pointer-events: none;
+    opacity: 0.8;
   }
   .avatar {
     width: 76px; height: 76px;
-    border-radius: 50%;
+    border-radius: 14px;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--serif);
-    font-size: 1.5rem; font-weight: 500; color: #fff;
+    font-size: 1.45rem; font-weight: 550; color: #fdfaf2;
     flex-shrink: 0;
+    box-shadow: inset 0 0 0 2px rgba(253, 250, 242, 0.28);
   }
   .avatar.m { background: var(--male); }
   .avatar.f { background: var(--female); }
-  .avatar.u { background: #a8a69d; }
-  .avatar.small { width: 44px; height: 44px; font-size: 0.95rem; }
+  .avatar.u { background: #a49b87; }
+  .avatar.small { width: 44px; height: 44px; font-size: 0.95rem; border-radius: 10px; }
   .profile h2 {
     margin: 0 0 4px;
     font-family: var(--serif);
-    font-size: 1.7rem;
-    font-weight: 600;
+    font-size: 1.75rem;
+    font-weight: 650;
     letter-spacing: 0.005em;
   }
   .kinship { color: var(--accent); font-size: 0.95rem; }
@@ -172,7 +195,7 @@
   .avatar img {
     width: 100%; height: 100%;
     object-fit: cover;
-    border-radius: 50%;
+    border-radius: inherit;
     display: block;
   }
   footer {
@@ -185,14 +208,23 @@
   }
 
   /* ---- Sections ---- */
-  section { margin-top: 32px; }
+  section { margin-top: 34px; }
   section > h3 {
+    display: flex;
+    align-items: center;
+    gap: 14px;
     font-size: 0.78rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.11em;
+    letter-spacing: 0.14em;
     color: var(--muted);
     margin: 0 0 12px;
+  }
+  section > h3::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--line);
   }
   .cards { display: flex; flex-wrap: wrap; gap: 10px; }
 
@@ -315,7 +347,7 @@
 <body>
 
 <header>
-  <h1><a href="#/">Gan Family Tree</a></h1>
+  <h1><a href="#/"><span class="seal">家</span>Gan Family Tree</a></h1>
   <nav>
     <a href="#/tree">Full tree</a>
     <a href="#/all">Everyone</a>
@@ -465,11 +497,11 @@ function personCard(p, relTag, subExtra) {
 }
 
 function cardsSection(title, entries) {
-  // entries: array of [person, relTag?]
+  // entries: array of [person, relTag?, subExtra?]
   if (!entries.length) return "";
   return `<section>
     <h3>${esc(title)}</h3>
-    <div class="cards">${entries.map(([p, tag]) => personCard(p, tag)).join("")}</div>
+    <div class="cards">${entries.map(([p, tag, subExtra]) => personCard(p, tag, subExtra)).join("")}</div>
   </section>`;
 }
 
@@ -526,25 +558,13 @@ function renderPerson(id) {
     </div>
   </div>`;
 
-  // Ancestry chart: person → parents → grandparents → great-grandparents
+  // Ancestry chart doubles as the Parents section — parents, grandparents,
+  // and great-grandparents are all clickable in it, so no separate cards.
   if (parentsOf(id).length) {
     html += `<section><h3>Ancestry</h3><div class="ped">${pedNode(id, 3)}</div></section>`;
   }
 
-  // Immediate family first
-  const parents = parentsOf(id);
-  html += parents.length
-    ? cardsSection("Parents", parents.map(x => [x]))
-    : `<section><h3>Parents</h3><p class="empty">Not recorded yet — add them in data.js.</p></section>`;
-
-  const sibs = siblingsOf(id);
-  const sibEntries = [
-    ...sibs.full.map(x => [x]),
-    ...sibs.half.map(x => [x, "half-sibling"]),
-  ];
-  html += cardsSection("Siblings", sibEntries);
-
-  // Partners & children, grouped per relationship
+  // The person's own family comes first: partners & children …
   const unions = unionsOf(id);
   if (unions.length) {
     html += `<section><h3>Partners &amp; Children</h3>`;
@@ -565,13 +585,21 @@ function renderPerson(id) {
     html += `</section>`;
   }
 
-  // Extended family
+  // … then the family they grew up in …
+  const sibs = siblingsOf(id);
+  const sibEntries = [
+    ...sibs.full.map(x => [x]),
+    ...sibs.half.map(x => [x, "half-sibling"]),
+  ];
+  html += cardsSection("Siblings", sibEntries);
+
+  // … then extended family, each card noting which branch it comes through.
   const auntsUncles = auntsUnclesOf(id);
   html += cardsSection("Aunts & Uncles", auntsUncles.map(x => [x]));
-  const niblings = dedupe([...sibs.full, ...sibs.half].flatMap(s => childrenOf(s.id)));
-  html += cardsSection("Nieces & Nephews", niblings.map(x => [x]));
   const cousins = dedupe(auntsUncles.flatMap(a => childrenOf(a.id)));
-  html += cardsSection("Cousins", cousins.map(x => [x]));
+  html += cardsSection("Cousins", cousins.map(x => [x, null, personDescriptor(x)]));
+  const niblings = dedupe([...sibs.full, ...sibs.half].flatMap(s => childrenOf(s.id)));
+  html += cardsSection("Nieces & Nephews", niblings.map(x => [x, null, personDescriptor(x)]));
 
   return html;
 }

@@ -87,7 +87,8 @@ with the new partner.
 ## Still unknown
 
 1. Names of the aunts'/uncles' partners (the cousins' other parents).
-2. Everything on Mom's side beyond the family name **Heng**.
+2. Mom's side: Cathy's maiden name is **Neoh**; her oldest brother is
+   **Heng Neoh**. Everything else on that side is still unknown.
 3. Grandma Gan's name, and both sets of great-grandparents.
 4. Maria's surname; Nolan's surname (McPhee assumed); most birth years.
 

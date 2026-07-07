@@ -245,21 +245,21 @@ const PEOPLE = [
   // Mom's side — great-grandparents
   // --------------------------------------------------------------------------
   {
-    id: "gg-heng-father",
-    name: "Great-Grandfather Heng",
+    id: "gg-neoh-father",
+    name: "Great-Grandfather Neoh",
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Grandpa Heng's father. Name and details unknown — please fill in.",
+    notes: "Grandpa Neoh's father. Name and details unknown — please fill in.",
     unknown: true,
   },
   {
-    id: "gg-heng-mother",
-    name: "Great-Grandmother Heng",
+    id: "gg-neoh-mother",
+    name: "Great-Grandmother Neoh",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Grandpa Heng's mother. Name and details unknown — please fill in.",
+    notes: "Grandpa Neoh's mother. Name and details unknown — please fill in.",
     unknown: true,
   },
   {
@@ -285,17 +285,17 @@ const PEOPLE = [
   // Mom's side — grandparents
   // --------------------------------------------------------------------------
   {
-    id: "grandpa-heng",
-    name: "Grandpa Heng",
+    id: "grandpa-neoh",
+    name: "Grandpa Neoh",
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's maternal grandfather (family name Heng). Given name unknown — please fill in.",
+    notes: "Victor's maternal grandfather (family name Neoh). Given name unknown — please fill in.",
     unknown: true,
   },
   {
-    id: "grandma-heng",
-    name: "Grandma Heng",
+    id: "grandma-neoh",
+    name: "Grandma Neoh",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
@@ -304,15 +304,24 @@ const PEOPLE = [
   },
 
   // --------------------------------------------------------------------------
-  // Parents
+  // Mom's generation — Heng (oldest) and Cathy
   // --------------------------------------------------------------------------
+  {
+    id: "heng-neoh",
+    name: "Heng Neoh",
+    gender: "M",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Victor's uncle — Cathy's oldest brother.",
+    unknown: false,
+  },
   {
     id: "cathy-gan",
     name: "Cathy Gan",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's mom (née Heng).",
+    notes: "Victor's mom (née Neoh).",
     unknown: false,
   },
 
@@ -538,14 +547,14 @@ const UNIONS = [
   // Great-grandparents → grandparents (Grandpa Gan and his sister; birth
   // order between them unknown)
   { id: "u-gg-gan",   partners: ["gg-gan-father", "gg-gan-mother"],   status: "married", start: null, end: null, children: ["grandpa-gan", "gan-grandaunt"] },
-  { id: "u-gg-heng",  partners: ["gg-heng-father", "gg-heng-mother"], status: "married", start: null, end: null, children: ["grandpa-heng"] },
-  { id: "u-gg-mgm",   partners: ["gg-mgm-father", "gg-mgm-mother"],   status: "married", start: null, end: null, children: ["grandma-heng"] },
+  { id: "u-gg-neoh",  partners: ["gg-neoh-father", "gg-neoh-mother"], status: "married", start: null, end: null, children: ["grandpa-neoh"] },
+  { id: "u-gg-mgm",   partners: ["gg-mgm-father", "gg-mgm-mother"],   status: "married", start: null, end: null, children: ["grandma-neoh"] },
 
   // Grandparents → parents' generation (children listed in birth order)
   { id: "u-gan-gp",   partners: ["grandpa-gan", "grandma-gan"],       status: "married", start: null, end: null,
     children: ["forest-gan", "gan-sibling-2", "gan-sibling-3", "cheong-koon-gan", "simon-gan", "eric-gan", "john-gan", "jacqueline-gan"] },
-  { id: "u-heng",     partners: ["grandpa-heng", "grandma-heng"],     status: "married", start: null, end: null,
-    children: ["cathy-gan"] },
+  { id: "u-neoh",     partners: ["grandpa-neoh", "grandma-neoh"],     status: "married", start: null, end: null,
+    children: ["heng-neoh", "cathy-gan"] },
 
   // Parents → Victor's generation
   { id: "u-cheong-cathy", partners: ["cheong-koon-gan", "cathy-gan"], status: "married", start: null, end: null,
