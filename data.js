@@ -101,7 +101,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Third-oldest of the eight Gan siblings. Has one son (name also unknown). Name unknown — please fill in.",
+    notes: "Third-oldest of the eight Gan siblings. Alex's father. Name unknown — please fill in.",
     unknown: true,
   },
   {
@@ -462,12 +462,12 @@ const PEOPLE = [
   },
   {
     id: "sibling3-son",
-    name: "Gan Cousin (3rd brother's son)",
+    name: "Alex Gan",
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — the 3rd-oldest Gan brother's son. Name unknown — please fill in.",
-    unknown: true,
+    notes: "Victor's cousin — the 3rd-oldest Gan brother's son.",
+    unknown: false,
   },
   {
     id: "simons-partner",
