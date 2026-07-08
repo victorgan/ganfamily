@@ -65,6 +65,15 @@ To model a divorce with a new partner: give the person two union entries — one
 with `status: "divorced"` (children of that marriage attached there) and one
 with the new partner.
 
+## Clan heritage
+
+Per family tradition (as told by Cheong Koon Gan): the first generation of
+the 顏 clan — *Gan* in Hokkien, *Yan* in Mandarin — was a disciple of
+Confucius; Yan clans traditionally trace to Yan Hui (顏回). Cheong Koon is
+the **34th generation**, his children the **35th**. The site computes each
+blood-line member's generation from that anchor (patrilineal descent) and
+shows it on their page; the legend appears on the Full tree page.
+
 ## Family structure (confirmed)
 
 - Victor's paternal grandparents (names unknown) had eight children, in birth

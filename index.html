@@ -304,6 +304,37 @@
   .pedcard.unknown { border-style: dashed; background: transparent; color: var(--muted); }
   .pedcard .tree-meta { font-weight: 400; }
 
+  /* ---- Family legend ---- */
+  .legend {
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 22px 26px;
+    margin-bottom: 20px;
+    font-family: var(--serif);
+    font-size: 0.98rem;
+  }
+  .legend p { margin: 0 0 8px; }
+  .legend p:last-child { margin-bottom: 0; }
+  .legend-seal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 46px; height: 46px;
+    flex-shrink: 0;
+    background: var(--accent);
+    color: #fdfaf2;
+    border-radius: 10px;
+    font-size: 26px;
+    font-family: Georgia, serif;
+    box-shadow: inset 0 0 0 2px rgba(253, 250, 242, 0.3);
+  }
+  .legend-source { color: var(--muted); font-style: italic; font-size: 0.88rem; }
+
   /* ---- Tree view ---- */
   .tree-root {
     background: var(--card);
@@ -409,6 +440,37 @@ function auntsUnclesOf(id) {
     for (const x of [...s.full, ...s.half]) if (!out.some(a => a.id === x.id)) out.push(x);
   }
   return out;
+}
+
+// ---------------------------------------------------------------------------
+// 顏 clan generation numbers.
+// Cheong Koon Gan is the 34th generation of the Gan (顏) clan, per family
+// tradition — so his father is the 33rd and the earliest recorded ancestor
+// here (Great-Grandfather Gan) the 32nd. Numbers descend patrilineally:
+// daughters of the clan carry their number, but their children take their
+// father's clan instead.
+// ---------------------------------------------------------------------------
+const GAN_GENERATIONS = (() => {
+  const map = new Map();
+  const seed = "gg-gan-father", seedGen = 32;
+  if (!byId[seed]) return map;
+  map.set(seed, seedGen);
+  const queue = [[seed, seedGen]];
+  while (queue.length) {
+    const [pid, g] = queue.shift();
+    if (byId[pid].gender !== "M" && pid !== seed) continue; // patrilineal
+    for (const u of unionsOf(pid)) {
+      for (const c of u.children) {
+        if (!map.has(c)) { map.set(c, g + 1); queue.push([c, g + 1]); }
+      }
+    }
+  }
+  return map;
+})();
+
+function nth(n) {
+  const s = ["th", "st", "nd", "rd"], v = n % 100;
+  return n + (s[(v - 20) % 10] || s[v] || s[0]);
 }
 
 // ---------------------------------------------------------------------------
@@ -544,6 +606,9 @@ function renderPerson(id) {
   if (p.died) facts.push(["Died", String(p.died) + (by && dy ? ` (aged ~${dy - by})` : "")]);
   if (p.location) facts.push(["Lives in", p.location]);
   if (p.occupation) facts.push(["Occupation", p.occupation]);
+  if (GAN_GENERATIONS.has(id)) {
+    facts.push(["Generation", `${nth(GAN_GENERATIONS.get(id))} generation of the 顏 (Gan) clan`]);
+  }
 
   const rel = personDescriptor(p);
   let html = `<div class="profile">
@@ -637,7 +702,19 @@ function renderTree() {
   // same grandparent couple).
   const covered = new Set();
   const roots = PEOPLE.filter(p => !parentUnion(p.id) && childrenOf(p.id).length);
-  let html = "";
+  let html = `<div class="legend">
+    <span class="legend-seal">顏</span>
+    <div>
+      <p>Legend has it that the first generation of the 顏 clan — <em>Gan</em> in
+      Hokkien, <em>Yan</em> in Mandarin — was a disciple of Confucius. Yan clans
+      traditionally trace their line to Yan Hui (顏回), the Master's favorite
+      student.</p>
+      <p>By that counting, this tree records the 32nd through 35th
+      generations of the clan: Cheong Koon Gan is the 34th, and his
+      children are the 35th.</p>
+      <p class="legend-source">— as told by Cheong Koon Gan</p>
+    </div>
+  </div>`;
   for (const root of roots) {
     if (covered.has(root.id)) continue;
     if (childrenOf(root.id).every(k => covered.has(k.id))) continue;
