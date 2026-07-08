@@ -92,7 +92,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Second-oldest of the eight Gan siblings. Father of Tinie, Michael, and M?. Name unknown — please fill in.",
+    notes: "Second-oldest of the eight Gan siblings. Father of Tinie, Michael, and James. Name unknown — please fill in.",
     unknown: true,
   },
   {
@@ -417,7 +417,7 @@ const PEOPLE = [
   },
   {
     id: "sibling2-partner",
-    name: "Tinie, Michael & M?'s Mother",
+    name: "Tinie, Michael & James's Mother",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
@@ -444,12 +444,12 @@ const PEOPLE = [
   },
   {
     id: "m-gan",
-    name: "M? Gan",
+    name: "James Gan",
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — son of the 2nd-oldest Gan brother, sibling of Tinie and Michael. Name starts with M — please fill in.",
-    unknown: true,
+    notes: "Victor's cousin — youngest child of the 2nd-oldest Gan brother (birth order to confirm).",
+    unknown: false,
   },
   {
     id: "sibling3-partner",
