@@ -403,7 +403,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — Eric's daughter.",
+    notes: "Victor's cousin — Eric's younger daughter.",
     unknown: false,
   },
   {
@@ -412,7 +412,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — Eric's daughter, Serene's sister.",
+    notes: "Victor's cousin — Eric's older daughter.",
     unknown: false,
   },
   {
@@ -575,7 +575,7 @@ const UNIONS = [
 
   // Aunts/uncles → cousins (spouse names still unknown)
   { id: "u-eric",       partners: ["eric-gan", "erics-partner"],             status: "married", start: null, end: null,
-    children: ["serene-gan", "elaine-gan"] },
+    children: ["elaine-gan", "serene-gan"] },
   { id: "u-sibling2",   partners: ["gan-sibling-2", "sibling2-partner"],     status: "married", start: null, end: null,
     children: ["tinie-gan", "michael-gan", "m-gan"] },
   { id: "u-sibling3",   partners: ["gan-sibling-3", "sibling3-partner"],     status: "married", start: null, end: null,
