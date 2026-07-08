@@ -101,7 +101,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Third-oldest of the eight Gan siblings. Alex's father. Name unknown — please fill in.",
+    notes: "Third-oldest of the eight Gan siblings. Father of Tivien and Alex. Name unknown — please fill in.",
     unknown: true,
   },
   {
@@ -457,8 +457,17 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Partner of the 3rd-oldest Gan brother. Name unknown — please fill in.",
+    notes: "Partner of the 3rd-oldest Gan brother; mother of Tivien and Alex. Name unknown — please fill in.",
     unknown: true,
+  },
+  {
+    id: "tivien-gan",
+    name: "Tivien Gan",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Victor's cousin — the 3rd-oldest Gan brother's daughter, Alex's older sister.",
+    unknown: false,
   },
   {
     id: "sibling3-son",
@@ -466,7 +475,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — the 3rd-oldest Gan brother's son.",
+    notes: "Victor's cousin — the 3rd-oldest Gan brother's son, Tivien's younger brother.",
     unknown: false,
   },
   {
@@ -538,7 +547,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — John's daughter.",
+    notes: "Victor's cousin — John's younger daughter.",
     unknown: false,
   },
   {
@@ -547,7 +556,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — John's daughter.",
+    notes: "Victor's cousin — John's older daughter.",
     unknown: false,
   },
 ];
@@ -579,7 +588,7 @@ const UNIONS = [
   { id: "u-sibling2",   partners: ["gan-sibling-2", "sibling2-partner"],     status: "married", start: null, end: null,
     children: ["tinie-gan", "michael-gan", "m-gan"] },
   { id: "u-sibling3",   partners: ["gan-sibling-3", "sibling3-partner"],     status: "married", start: null, end: null,
-    children: ["sibling3-son"] },
+    children: ["tivien-gan", "sibling3-son"] },
 
   // Lim branch
   { id: "u-lim-gp",       partners: ["lim-grandfather", "gan-grandaunt"], status: "married", start: null, end: null,
@@ -595,7 +604,7 @@ const UNIONS = [
   { id: "u-maria-erik", partners: ["maria", "erik"],                         status: "married", start: null, end: null,
     children: ["jayden"] },
   { id: "u-john",       partners: ["john-gan", "johns-partner"],             status: "divorced", start: null, end: null,
-    children: ["natalie-gan", "stephanie-gan"] },
+    children: ["stephanie-gan", "natalie-gan"] },
 ];
 
 // The person shown when the site first loads.

@@ -74,8 +74,8 @@ with the new partner.
 - Cousins: **Serene** and **Elaine** (Eric's daughters), **Jonathan**
   (Simon's son), **Maria** (Jacqueline's daughter), **Natalie** and
   **Stephanie** (John's daughters), **Tinie**, **Michael**, and **James**
-  (the 2nd-oldest brother's children, James youngest), and **Alex**
-  (the 3rd-oldest brother's son).
+  (the 2nd-oldest brother's children, James youngest), and **Tivien** and
+  **Alex** (the 3rd-oldest brother's children, Tivien older).
 - **Calvin, Victor, Christine** are Cheong Koon & Cathy's children;
   Christine (b. 1991, Corner Brook) is married to **Ian McPhee**, son
   **Nolan**.
