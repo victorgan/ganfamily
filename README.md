@@ -67,7 +67,7 @@ with the new partner.
 
 ## Clan heritage
 
-Per family tradition (as told by Cheong Koon Gan): the first generation of
+Per family tradition: the first generation of
 the 顏 clan — *Gan* in Hokkien, *Yan* in Mandarin — was a disciple of
 Confucius; Yan clans traditionally trace to Yan Hui (顏回). Cheong Koon is
 the **34th generation**, his children the **35th**. The site computes each
