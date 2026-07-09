@@ -330,7 +330,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Travis Lim's wife. Surname unknown — please fill in.",
+    notes: "Travis Lim's wife. Surname unknown.",
     unknown: false,
   },
   {
@@ -352,7 +352,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Grandpa Neoh's father. Name and details unknown — please fill in.",
+    notes: "Grandpa Neoh's father. Name and details unknown.",
     unknown: true,
   },
   {
@@ -361,7 +361,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Grandpa Neoh's mother. Name and details unknown — please fill in.",
+    notes: "Grandpa Neoh's mother. Name and details unknown.",
     unknown: true,
   },
   {
@@ -370,7 +370,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Father of Victor's maternal grandmother. Unknown — please fill in.",
+    notes: "Father of Victor's maternal grandmother. Unknown.",
     unknown: true,
   },
   {
@@ -379,7 +379,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Mother of Victor's maternal grandmother. Unknown — please fill in.",
+    notes: "Mother of Victor's maternal grandmother. Unknown.",
     unknown: true,
   },
 
@@ -392,7 +392,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's maternal grandfather (family name Neoh). Given name unknown — please fill in.",
+    notes: "Victor's maternal grandfather (family name Neoh). Given name unknown.",
     unknown: true,
   },
   {
@@ -401,7 +401,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's maternal grandmother. Name unknown — please fill in.",
+    notes: "Victor's maternal grandmother. Name unknown.",
     unknown: true,
   },
 
@@ -750,7 +750,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Maria's husband. Surname unknown — please fill in.",
+    notes: "Maria's husband. Surname unknown.",
     unknown: false,
   },
   {

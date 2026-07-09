@@ -440,9 +440,8 @@
 <main id="app"></main>
 
 <footer>
-  Spotted a mistake, or know one of the missing names?
-  <a href="https://github.com/victorgan/ganfamily/edit/main/data.js" target="_blank" rel="noopener">Edit the tree on GitHub</a>
-  — every person and relationship lives in one simple file.
+  Corrections and additions:
+  <a href="https://github.com/victorgan/ganfamily/edit/main/data.js" target="_blank" rel="noopener">edit the tree on GitHub</a>.
 </footer>
 
 <script src="data.js"></script>
@@ -673,7 +672,7 @@ function renderPerson(id) {
       ${facts.length ? `<dl class="facts">${facts.map(([k, v]) =>
         `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
       ${p.notes ? `<div class="notes">${esc(p.notes)}</div>` : ""}
-      ${p.unknown ? `<div class="unknown-banner">Details unknown — help fill this in!</div>` : ""}
+      ${p.unknown ? `<div class="unknown-banner">Details not yet known</div>` : ""}
     </div>
   </div>`;
 
@@ -761,7 +760,7 @@ function renderTree() {
     <div>
       <p>This tree spans the 30th through 36th generations of the 顏 clan,
       whose line is traditionally traced to a disciple of Confucius.
-      <a href="#/heritage">Read the full story of the lineage →</a></p>
+      <a href="#/heritage">About the lineage →</a></p>
     </div>
   </div>`;
   for (const root of roots) {
@@ -787,7 +786,7 @@ function renderAll() {
   if (placeholders.length) {
     html += `<section>
       <h3>Still to identify (${placeholders.length})</h3>
-      <p class="empty">Relatives we know exist but whose names or details are missing — edit data.js to fill them in.</p>
+      <p class="empty">Relatives known to exist whose names or details are missing.</p>
       <div class="all-grid">${placeholders.map(card).join("")}</div>
     </section>`;
   }
@@ -821,8 +820,7 @@ function renderHeritage() {
     <p>The family belongs to the <strong>仁贵</strong> family's third house
     (三房), of <strong>Shigushan community, Shigu town, Yongchun county,
     Quanzhou, Fujian</strong> (中国福建省泉州市永春县石鼓镇石鼓山社区). The
-    ancestral hall is named <strong>赐美堂</strong> — the "Hall of Bestowed
-    Beauty" — which still stands at Shigu community group 13, postcode
+    ancestral hall, <strong>赐美堂</strong>, still stands at Shigu community group 13, postcode
     362601. Both the ancestral house and its shrine are photographed in the
     genealogy.</p>
     <div class="figrow">
@@ -903,9 +901,7 @@ function renderHeritage() {
     genealogy.</p>
     <p class="footnote">Several branches of the register — 文啟's, 文喜's,
     文經's, and 文娥's families, and the other 貞-generation brothers'
-    lines — are not yet transcribed into this site. Corrections and additions
-    are welcome: every person lives in one simple file, editable on
-    <a href="https://github.com/victorgan/ganfamily/edit/main/data.js" target="_blank" rel="noopener">GitHub</a>.</p>
+    lines — are not yet transcribed into this site.</p>
   </div>`;
 }
 
