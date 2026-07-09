@@ -184,6 +184,31 @@
     letter-spacing: 0.005em;
   }
   .kinship { color: var(--accent); font-size: 0.95rem; }
+  .relpath { margin-top: 8px; font-size: 0.93rem; }
+  .relpath summary {
+    cursor: pointer;
+    color: var(--accent);
+    font-weight: 600;
+    list-style: none;
+  }
+  .relpath summary::after { content: " · how?"; font-weight: 400; color: var(--muted); font-size: 0.85em; }
+  .relpath[open] summary::after { content: ""; }
+  .relpath .chain { margin-top: 6px; color: var(--muted); line-height: 1.7; }
+  .linklike {
+    background: none; border: none; padding: 0;
+    color: var(--muted); cursor: pointer;
+    font-size: 0.85rem; text-decoration: underline;
+    font-family: inherit;
+  }
+  .linklike:hover { color: var(--accent); }
+  .viewer-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.82rem; color: var(--muted);
+    border: 1px solid var(--line); border-radius: 999px;
+    padding: 3px 10px; align-self: center;
+  }
+  .viewer-pill button { background: none; border: none; cursor: pointer; color: var(--muted); padding: 0; font-size: 0.9em; }
+  .viewer-pill button:hover { color: var(--accent); }
   .cn { font-family: var(--serif); font-weight: 450; color: var(--muted); margin-left: 8px; font-size: 0.82em; letter-spacing: 0.04em; }
   .facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 16px; margin-top: 12px; font-size: 0.93rem; }
   .facts dt { color: var(--muted); }
@@ -457,6 +482,7 @@
     <a href="#/all">Everyone</a>
     <a href="#/heritage">Heritage</a>
   </nav>
+  <span id="viewer-slot"></span>
   <div class="search-wrap">
     <input id="search" type="search" placeholder="Search people…" autocomplete="off">
     <div id="search-results" class="search-results"></div>
@@ -599,6 +625,181 @@ function personDescriptor(p) {
 }
 
 // ---------------------------------------------------------------------------
+// Relationship path finder — explains how anyone relates to the pinned viewer
+// ---------------------------------------------------------------------------
+const VIEWER_KEY = "gan-viewer";
+function getViewer() {
+  const v = localStorage.getItem(VIEWER_KEY);
+  return v && byId[v] ? v : null;
+}
+
+const ADJ = (() => {
+  // Adjacency list; blood edges first so BFS prefers blood over marriage.
+  const adj = new Map(PEOPLE.map(p => [p.id, []]));
+  for (const u of UNIONS) {
+    for (const pid of [...u.partners].reverse()) {
+      // reversed so the first-listed partner (the blood-line parent) is
+      // explored first and chains route through known ancestors
+      for (const c of u.children) {
+        if (adj.has(pid) && adj.has(c)) {
+          adj.get(c).unshift({ to: pid, type: "up" });
+          adj.get(pid).unshift({ to: c, type: "down" });
+        }
+      }
+    }
+  }
+  for (const u of UNIONS) {
+    const [a, b] = u.partners;
+    if (adj.has(a) && adj.has(b)) {
+      adj.get(a).push({ to: b, type: "partner", union: u });
+      adj.get(b).push({ to: a, type: "partner", union: u });
+    }
+  }
+  return adj;
+})();
+
+function findPath(fromId, toId) {
+  // BFS shortest path; returns [{id}, {id, edge}, ...] or null.
+  if (fromId === toId) return [{ id: fromId }];
+  const prev = new Map([[fromId, null]]);
+  const queue = [fromId];
+  while (queue.length) {
+    const cur = queue.shift();
+    for (const e of ADJ.get(cur) || []) {
+      if (prev.has(e.to)) continue;
+      prev.set(e.to, { from: cur, edge: e });
+      if (e.to === toId) {
+        const path = [];
+        let node = toId;
+        while (node !== null) {
+          const link = prev.get(node);
+          path.unshift({ id: node, edge: link ? link.edge : null });
+          node = link ? link.from : null;
+        }
+        return path;
+      }
+      queue.push(e.to);
+    }
+  }
+  return null;
+}
+
+const KIN_ORDINAL = ["", "first", "second", "third", "fourth", "fifth"];
+
+function bloodWord(up, down, target, viaParent, sameUnion) {
+  // English kinship word for a blood path: `up` steps to the common
+  // ancestor, `down` steps back to the target.
+  const g = (m, f, n) => gword(target, m, f, n);
+  const side = viaParent ? (viaParent.gender === "M" ? "paternal " : viaParent.gender === "F" ? "maternal " : "") : "";
+  const greats = n => "great-".repeat(Math.max(0, n));
+  if (down === 0) {
+    if (up === 1) return g("father", "mother", "parent");
+    return side + greats(up - 2) + g("grandfather", "grandmother", "grandparent");
+  }
+  if (up === 0) {
+    if (down === 1) return g("son", "daughter", "child");
+    return greats(down - 2) + g("grandson", "granddaughter", "grandchild");
+  }
+  if (up === 1 && down === 1) return (sameUnion ? "" : "half-") + g("brother", "sister", "sibling");
+  if (down === 1) return side + greats(up - 2) + g("uncle", "aunt", "uncle or aunt");
+  if (up === 1) return greats(down - 2) + g("nephew", "niece", "nephew or niece");
+  const degree = Math.min(up, down) - 1;
+  const removed = Math.abs(up - down);
+  let w = (KIN_ORDINAL[degree] || degree + "th") + " cousin";
+  if (removed === 1) w += " once removed";
+  else if (removed === 2) w += " twice removed";
+  else if (removed > 2) w += ` ${removed}× removed`;
+  return w;
+}
+
+const SPOUSE_OF = { married: ["husband", "wife", "spouse"], divorced: ["former husband", "former wife", "former spouse"],
+  separated: ["former husband", "former wife", "former spouse"], partner: ["partner", "partner", "partner"], widowed: ["husband", "wife", "spouse"] };
+
+function spouseWord(union, person) {
+  const w = SPOUSE_OF[union && union.status] || SPOUSE_OF.married;
+  return person.gender === "M" ? w[0] : person.gender === "F" ? w[1] : w[2];
+}
+
+function describeRelation(viewerId, targetId) {
+  // Returns {label, chainHtml} or null.
+  const path = findPath(viewerId, targetId);
+  if (!path || path.length < 2) return null;
+
+  const edges = path.slice(1).map(x => x.edge);
+  const firstPartner = edges.findIndex(e => e.type === "partner");
+  const lastPartner = edges.map(e => e.type).lastIndexOf("partner");
+  const partnerCount = edges.filter(e => e.type === "partner").length;
+
+  // Build the step-by-step chain (always available).
+  let chain = "you";
+  for (let i = 1; i < path.length; i++) {
+    const q = byId[path[i].id], e = path[i].edge;
+    const prevP = byId[path[i - 1].id];
+    const pron = i === 1 ? "your" : prevP.gender === "M" ? "his" : prevP.gender === "F" ? "her" : "their";
+    let word;
+    if (e.type === "up") word = gword(q, "father", "mother", "parent");
+    else if (e.type === "down") word = gword(q, "son", "daughter", "child");
+    else word = spouseWord(e.union, q);
+    chain += ` → ${pron} ${word} <a href="#/p/${q.id}">${esc(q.name)}</a>`;
+  }
+
+  // Label: pure blood, or blood with a marriage at one end.
+  let label = null;
+  const bloodSeg = (ids) => {
+    // ids: person ids along a blood-only stretch; verify up* then down*.
+    let up = 0, down = 0, apexReached = false;
+    for (let i = 1; i < ids.length; i++) {
+      const e = ids[i].edge;
+      if (e.type === "up") { if (apexReached) return null; up++; }
+      else { apexReached = true; down++; }
+    }
+    const viaParent = up >= 2 ? byId[ids[1].id] : null;
+    const a = ids[0].id, b = ids[ids.length - 1].id;
+    const sameUnion = up === 1 && down === 1 && parentUnion(a) === parentUnion(b);
+    return bloodWord(up, down, byId[b], viaParent, sameUnion);
+  };
+
+  if (partnerCount === 0) {
+    const w = bloodSeg(path);
+    if (w) label = `Your ${w}`;
+  } else if (partnerCount === 1 && lastPartner === edges.length - 1) {
+    // blood relative's spouse
+    const bloodPart = path.slice(0, -1);
+    const target = byId[targetId];
+    const sw = spouseWord(edges[edges.length - 1].union, target);
+    if (bloodPart.length === 1) label = `Your ${sw}`;
+    else {
+      const w = bloodSeg(bloodPart);
+      if (w) label = `${sw.charAt(0).toUpperCase() + sw.slice(1)} of your ${w} ${byId[bloodPart[bloodPart.length - 1].id].name}`;
+    }
+  } else if (partnerCount === 1 && firstPartner === 0) {
+    // spouse's blood relative
+    const spouse = byId[path[1].id];
+    const sw = spouseWord(edges[0].union, spouse);
+    const w = bloodSeg(path.slice(1));
+    if (w) label = `Your ${sw}'s ${w}`;
+  }
+  if (!label) {
+    const mid = byId[path[Math.floor(path.length / 2)].id];
+    label = `Connected through ${mid.name}`;
+  }
+  return { label, chain };
+}
+
+function viewerBlockHtml(id) {
+  const viewer = getViewer();
+  if (!viewer) {
+    return `<div class="relpath"><button class="linklike" data-setme="${id}">This is me — show how everyone is related to me</button></div>`;
+  }
+  if (viewer === id) {
+    return `<div class="relpath"><span style="color:var(--muted)">You're viewing the tree as yourself.</span> <button class="linklike" data-clearme>Stop</button></div>`;
+  }
+  const rel = describeRelation(viewer, id);
+  if (!rel) return "";
+  return `<details class="relpath"><summary>${rel.label}</summary><div class="chain">${rel.chain}</div></details>`;
+}
+
+// ---------------------------------------------------------------------------
 // Rendering helpers
 // ---------------------------------------------------------------------------
 function esc(s) {
@@ -713,6 +914,7 @@ function renderPerson(id) {
     <div>
       <h2>${esc(p.name)}${cnHtml(p)}</h2>
       ${rel ? `<div class="kinship">${esc(rel)}</div>` : ""}
+      ${viewerBlockHtml(id)}
       ${facts.length ? `<dl class="facts">${facts.map(([k, v]) =>
         `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
       ${p.notes ? `<div class="notes">${esc(p.notes)}</div>` : ""}
@@ -1078,6 +1280,22 @@ app.addEventListener("click", e => {
   const twist = e.target.closest(".twist");
   if (twist) twist.closest("li").classList.toggle("collapsed");
 });
+
+// Viewer pinning ("this is me")
+function paintViewerPill() {
+  const slot = document.getElementById("viewer-slot");
+  const viewer = getViewer();
+  slot.innerHTML = viewer
+    ? `<span class="viewer-pill">As ${esc(byId[viewer].name.split(" ")[0])} <button data-clearme aria-label="Stop viewing as this person">✕</button></span>`
+    : "";
+}
+document.addEventListener("click", e => {
+  const set = e.target.closest("[data-setme]");
+  if (set) { localStorage.setItem(VIEWER_KEY, set.dataset.setme); paintViewerPill(); route(); }
+  const clear = e.target.closest("[data-clearme]");
+  if (clear) { localStorage.removeItem(VIEWER_KEY); paintViewerPill(); route(); }
+});
+paintViewerPill();
 
 // ---------------------------------------------------------------------------
 // Search

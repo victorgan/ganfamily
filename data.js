@@ -1015,7 +1015,17 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Christine and Ian's son — confirm surname.",
+    notes: "Christine and Ian's older son.",
+    unknown: false,
+  },
+  {
+    id: "callum-mcphee",
+    name: "Callum McPhee",
+    gender: "M",
+    born: "2026-01-17",
+    died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Christine and Ian's younger son, born the morning of 17 January 2026.",
     unknown: false,
   },
 
@@ -1346,7 +1356,7 @@ const UNIONS = [
 
   // Christine + Ian
   { id: "u-christine-ian", partners: ["christine-gan", "ian-mcphee"], status: "married", start: null, end: null,
-    children: ["nolan-mcphee"] },
+    children: ["nolan-mcphee", "callum-mcphee"] },
 
   // Aunts/uncles → cousins (spouse names still unknown)
   { id: "u-eric",       partners: ["eric-gan", "erics-partner"],             status: "married", start: null, end: null,
