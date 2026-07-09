@@ -837,7 +837,7 @@ function renderTree(showAll) {
   html += showAll
     ? `<p class="tree-switch">The complete clan tree. Large branches are folded — click ▸ to open them.
        <a href="#/tree">Back to the family tree →</a></p>`
-    : `<p class="tree-switch">Starting from the grandparents.
+    : `<p class="tree-switch">The family's recent branches, from the 33rd generation.
        <a href="#/tree/all">See the whole clan, from 顏亨曉 (30th generation) →</a></p>`;
   for (const root of roots) {
     if (covered.has(root.id)) continue;
@@ -920,8 +920,9 @@ function renderHeritage() {
     houses — 仁一 (first house), 仁贤 (second), and <strong>仁贵</strong>
     (third house, ours) — and the family begins its own generation count anew
     at <strong>仁贵公</strong>. All the generation numbers on this site count
-    from him: Gan Yong Teng is the 33rd generation of the 仁贵 line, and the
-    cousins of Victor's generation are the 35th.</p>
+    from him: Gan Yong Teng is the 33rd generation of the 仁贵 line, his
+    children the 34th, and their children — the 华/婷 generation — the
+    35th.</p>
     <p>The surname is read <em>Yan</em> in Mandarin and <em>Gan</em> in
     Hokkien — the romanization the family carried to Malaysia.</p>
 

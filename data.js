@@ -112,7 +112,7 @@ const PEOPLE = [
     chineseName: null,
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's great-grandfather, 32nd generation — fourth of the 贞-generation brothers (贞溉, 贞赞, 贞立, 贞录, 贞仍) in the 利潘公 branch. His family appears on pages 21–23 of the genealogy.",
+    notes: "32nd generation — fourth of the 贞-generation brothers (贞溉, 贞赞, 贞立, 贞录, 贞仍) in the 利潘公 branch. His family appears on pages 21–23 of the genealogy.",
     unknown: false,
   },
   {
@@ -634,7 +634,7 @@ const PEOPLE = [
     chineseName: "顏文雾",
     born: null, died: null,
     birthPlace: null, location: "Kuala Lumpur, Malaysia", occupation: null,
-    notes: "Victor's paternal grandfather. Known as Gan Boon Boo (文雾) before marriage — he appears under that name in the clan genealogy, second of 顏貞錄's six children (page 22). The genealogy marks his branch 吉隆坡 (Kuala Lumpur). Photo from the genealogy.",
+    notes: "Known as Gan Boon Boo (文雾) before marriage — he appears under that name in the clan genealogy, second of 顏貞錄's six children (page 22). The genealogy marks his branch 吉隆坡 (Kuala Lumpur). Photo from the genealogy.",
     photo: "photos/gan-yong-teng.jpg",
     unknown: false,
   },
@@ -645,7 +645,7 @@ const PEOPLE = [
     chineseName: null,
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's paternal grandmother, Gan Yong Teng's wife.",
+    notes: "Gan Yong Teng's wife.",
     unknown: false,
   },
 
@@ -661,7 +661,7 @@ const PEOPLE = [
     chineseName: "顏章琳",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's uncle — eldest of the eight Gan siblings. The genealogy (page 22) lists him as 章琳, unmarried (单身).",
+    notes: "Eldest of the eight Gan siblings. The genealogy (page 22) lists him as 章琳, unmarried (单身).",
     unknown: false,
   },
   {
@@ -693,7 +693,7 @@ const PEOPLE = [
     location: "Mississauga, Ontario, Canada",
     occupation: null,
     chineseName: "顏章堃",
-    notes: "Victor's dad. Fifth-oldest of the eight Gan siblings; 章堃 in the genealogy (page 22).",
+    notes: "Fifth-oldest of the eight Gan siblings; 章堃 in the genealogy (page 22).",
     unknown: false,
   },
   {
@@ -705,7 +705,7 @@ const PEOPLE = [
     location: "Kuala Lumpur, Malaysia",
     occupation: null,
     chineseName: "顏章銮",
-    notes: "Victor's uncle. Serene and Elaine's father. Sixth-oldest of the eight Gan siblings; 章銮 in the genealogy.",
+    notes: "Serene and Elaine's father. Sixth-oldest of the eight Gan siblings; 章銮 in the genealogy.",
     unknown: false,
   },
   {
@@ -717,7 +717,7 @@ const PEOPLE = [
     location: "Purmerend, Netherlands",
     occupation: null,
     chineseName: "顏章铨",
-    notes: "Victor's uncle. Jonathan's father. Third-oldest of the eight Gan siblings; 章铨 in the genealogy, where he is also listed under his uncle 文喜 with the note 过房 (adopted across to that line).",
+    notes: "Jonathan's father. Third-oldest of the eight Gan siblings; 章铨 in the genealogy, where he is also listed under his uncle 文喜 with the note 过房 (adopted across to that line).",
     unknown: false,
   },
   {
@@ -727,7 +727,7 @@ const PEOPLE = [
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
     chineseName: "顏丽珠",
-    notes: "Victor's aunt. Maria's mother. Youngest of the eight Gan siblings; 丽珠 in the genealogy.",
+    notes: "Maria's mother. Youngest of the eight Gan siblings; 丽珠 in the genealogy.",
     unknown: false,
   },
   {
@@ -737,7 +737,7 @@ const PEOPLE = [
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
     chineseName: "顏章昕",
-    notes: "Victor's uncle. Natalie and Stephanie's father. Seventh-oldest sibling and youngest Gan brother; 章昕 in the genealogy.",
+    notes: "Natalie and Stephanie's father. Seventh-oldest sibling and youngest Gan brother; 章昕 in the genealogy.",
     unknown: false,
   },
 
@@ -898,7 +898,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Father of Victor's maternal grandmother. Unknown.",
+    notes: "Grandma Neoh's father. Unknown.",
     unknown: true,
   },
   {
@@ -907,7 +907,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Mother of Victor's maternal grandmother. Unknown.",
+    notes: "Grandma Neoh's mother. Unknown.",
     unknown: true,
   },
 
@@ -920,7 +920,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's maternal grandfather (family name Neoh). Given name unknown.",
+    notes: "Father of Heng, Soo, and Cathy (family name Neoh). Given name unknown.",
     unknown: true,
   },
   {
@@ -929,7 +929,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's maternal grandmother. Name unknown.",
+    notes: "Grandpa Neoh's wife; mother of Heng, Soo, and Cathy. Name unknown.",
     unknown: true,
   },
 
@@ -942,7 +942,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's uncle — Cathy's oldest brother.",
+    notes: "Cathy's oldest brother.",
     unknown: false,
   },
   {
@@ -961,12 +961,12 @@ const PEOPLE = [
     chineseName: "梁素华",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's mom (née Neoh — 梁 in the genealogy, Neoh in Hokkien).",
+    notes: "Née Neoh — 梁 in the genealogy, Neoh in Hokkien.",
     unknown: false,
   },
 
   // --------------------------------------------------------------------------
-  // Victor and siblings
+  // Cheong Koon & Cathy's children
   // --------------------------------------------------------------------------
   {
     id: "calvin-gan",
@@ -1039,7 +1039,7 @@ const PEOPLE = [
     chineseName: "顏婷君",
     born: null, died: null,
     birthPlace: null, location: "Kuala Lumpur, Malaysia", occupation: null,
-    notes: "Victor's cousin — Eric's younger daughter.",
+    notes: "Eric's younger daughter.",
     unknown: false,
   },
   {
@@ -1059,7 +1059,7 @@ const PEOPLE = [
     chineseName: "顏婷俐",
     born: null, died: null,
     birthPlace: null, location: "Sydney, Australia", occupation: null,
-    notes: "Victor's cousin — Eric's older daughter.",
+    notes: "Eric's older daughter.",
     unknown: false,
   },
   {
@@ -1099,7 +1099,7 @@ const PEOPLE = [
     chineseName: "顏婷旎",
     born: null, died: null,
     birthPlace: null, location: "Melbourne, Australia", occupation: null,
-    notes: "Victor's cousin — daughter of the 2nd-oldest Gan brother.",
+    notes: "Daughter of the 2nd-oldest Gan brother.",
     unknown: false,
   },
   {
@@ -1139,7 +1139,7 @@ const PEOPLE = [
     chineseName: "顏華昀",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — youngest child of the 2nd-oldest Gan brother.",
+    notes: "Youngest child of the 2nd-oldest Gan brother.",
     unknown: false,
   },
   {
@@ -1169,7 +1169,7 @@ const PEOPLE = [
     chineseName: "顏华琸",
     born: null, died: null,
     birthPlace: null, location: "Singapore", occupation: null,
-    notes: "Victor's cousin — second child of the 2nd-oldest Gan brother. Chinese-name character 琸 hard to read in the genealogy scan — please verify.",
+    notes: "Second child of the 2nd-oldest Gan brother. Chinese-name character 琸 hard to read in the genealogy scan — please verify.",
     unknown: false,
   },
   {
@@ -1219,7 +1219,7 @@ const PEOPLE = [
     chineseName: "顏婷瑋",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — the 4th-oldest Gan brother's daughter, Alex's older sister.",
+    notes: "Daughter of the 4th-oldest Gan brother, Alex's older sister.",
     unknown: false,
   },
   {
@@ -1229,7 +1229,7 @@ const PEOPLE = [
     chineseName: "顏華坊",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — the 4th-oldest Gan brother's son, Tivien's younger brother.",
+    notes: "Son of the 4th-oldest Gan brother, Tivien's younger brother.",
     unknown: false,
   },
   {
@@ -1249,7 +1249,7 @@ const PEOPLE = [
     chineseName: "顏华安",
     born: null, died: null,
     birthPlace: null, location: "Hilversum, Netherlands", occupation: null,
-    notes: "Victor's cousin — Simon's son.",
+    notes: "Simon's son.",
     unknown: false,
   },
   {
@@ -1269,7 +1269,7 @@ const PEOPLE = [
     chineseName: "張玉瑤",
     born: null, died: null,
     birthPlace: null, location: "Utrecht, Netherlands", occupation: null,
-    notes: "Victor's cousin — Jacqueline's daughter. 張玉瑤 in the genealogy (page 22), so her surname is 張.",
+    notes: "Jacqueline's daughter. 張玉瑤 in the genealogy (page 22), so her surname is 張.",
     unknown: false,
   },
   {
@@ -1307,7 +1307,7 @@ const PEOPLE = [
     chineseName: "顏婷玗",
     born: null, died: null,
     birthPlace: null, location: "Vancouver, British Columbia, Canada", occupation: null,
-    notes: "Victor's cousin — John's younger daughter. Mapped to 婷玗 in the genealogy on birth-order grounds — please verify.",
+    notes: "John's younger daughter. Mapped to 婷玗 in the genealogy on birth-order grounds — please verify.",
     unknown: false,
   },
   {
@@ -1317,7 +1317,7 @@ const PEOPLE = [
     chineseName: "顏婷妍",
     born: null, died: null,
     birthPlace: null, location: "Ottawa, Ontario, Canada", occupation: null,
-    notes: "Victor's cousin — John's older daughter. Mapped to 婷妍 in the genealogy on birth-order grounds — please verify.",
+    notes: "John's older daughter. Mapped to 婷妍 in the genealogy on birth-order grounds — please verify.",
     unknown: false,
   },
 ];
@@ -1340,7 +1340,7 @@ const UNIONS = [
   { id: "u-neoh",     partners: ["grandpa-neoh", "grandma-neoh"],     status: "married", start: null, end: null,
     children: ["heng-neoh", "soo-neoh", "cathy-gan"] },
 
-  // Parents → Victor's generation
+  // Cheong Koon & Cathy → their children
   { id: "u-cheong-cathy", partners: ["cheong-koon-gan", "cathy-gan"], status: "married", start: null, end: null,
     children: ["calvin-gan", "victor-gan", "christine-gan"] },
 
