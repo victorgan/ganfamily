@@ -92,26 +92,27 @@ name. Record alternates in a person's `notes`; Chinese names go in the
 
 - Victor's paternal grandparents are **Gan Yong Teng** (in the genealogy:
   Gan Boon Boo) and **Tan Seok Eng**. Their eight children, in birth order:
-  **Forest** (eldest), an unidentified brother (2nd), **Simon** (3rd,
-  Purmerend, NL), another unidentified brother (4th), **Cheong Koon** (5th —
-  Victor's dad, b. 1950, Mississauga), **Eric** (6th, KL), **John** (7th,
-  youngest brother), and **Jacqueline** (youngest).
+  **Forest** 章琳 (eldest), **顏章池** (2nd, English name unknown),
+  **Simon** 章铨 (3rd, Purmerend, NL), **顏章炫** (4th, English name
+  unknown), **Cheong Koon** 章堃 (5th — Victor's dad, b. 1950, Mississauga),
+  **Eric** 章銮 (6th, KL), **John** 章昕 (7th, youngest brother), and
+  **Jacqueline** 丽珠 (youngest).
 - Cousins: **Serene** and **Elaine** (Eric's daughters), **Jonathan**
   (Simon's son), **Maria** (Jacqueline's daughter), **Natalie** and
-  **Stephanie** (John's daughters), **Tinie**, **Michael**, and **James**
-  (the 2nd-oldest brother's children, James youngest), and **Tivien** and
-  **Alex** (the 4th-oldest brother's children, Tivien older).
+  **Stephanie** (John's daughters), **Tinie**, **James**, and **Michael**
+  (顏章池's children, in that order), and **Tivien** and **Alex**
+  (顏章炫's children, Tivien older).
 - **Calvin, Victor, Christine** are Cheong Koon & Cathy's children;
   Christine (b. 1991, Corner Brook) is married to **Ian McPhee**, son
   **Nolan**.
-- **Lim branch**: Gan Yong Teng had three sisters; the **third sister**
-  (name unknown) married a Lim. Their son **Han Tiong Lim** married
-  **Irene** — children **Kevin** (oldest), **Kristen** (middle), **Travis**
+- **Lim branch**: Gan Yong Teng's sister **顏文謹** married **林紀鴻**.
+  Their son **Han Tiong Lim** (林漢忠) married **Irene** — children **Kevin** (oldest), **Kristen** (middle), **Travis**
   (youngest). Travis is married to **Fiona**, son **Henry**.
 
 ## Still unknown
 
-1. Names of the aunts'/uncles' partners (the cousins' other parents).
+1. English names for people recorded only in Chinese (顏章池, 顏章炫,
+   薛亚玉, 邝芝雯, 張惠桃, 陳玉霞, …).
 2. Mom's side: Cathy's maiden name is **Neoh**; her oldest brother is
    **Heng Neoh**. Everything else on that side is still unknown.
 3. Great-Grandmother Gan's name (顏貞錄's wife — possibly in the photos on
