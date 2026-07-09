@@ -179,6 +179,7 @@
     letter-spacing: 0.005em;
   }
   .kinship { color: var(--accent); font-size: 0.95rem; }
+  .cn { font-weight: 450; color: var(--muted); margin-left: 8px; font-size: 0.82em; letter-spacing: 0.04em; }
   .facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 16px; margin-top: 12px; font-size: 0.93rem; }
   .facts dt { color: var(--muted); }
   .facts dd { margin: 0; }
@@ -443,15 +444,14 @@ function auntsUnclesOf(id) {
 
 // ---------------------------------------------------------------------------
 // 顏 clan generation numbers.
-// Cheong Koon Gan is the 34th generation of the Gan (顏) clan, per family
-// tradition — so his father is the 33rd and the earliest recorded ancestor
-// here (Great-Grandfather Gan) the 32nd. Numbers descend patrilineally:
-// daughters of the clan carry their number, but their children take their
-// father's clan instead.
+// Cheong Koon Gan is the 34th generation of the Gan (顏) clan, per the clan
+// genealogy — the earliest recorded ancestor here, 顏亨曉, is the 30th.
+// Numbers descend patrilineally: daughters of the clan carry their number,
+// but their children take their father's clan instead.
 // ---------------------------------------------------------------------------
 const GAN_GENERATIONS = (() => {
   const map = new Map();
-  const seed = "gg-gan-father", seedGen = 32;
+  const seed = "gan-30-hengxiao", seedGen = 30;
   if (!byId[seed]) return map;
   map.set(seed, seedGen);
   const queue = [[seed, seedGen]];
@@ -525,6 +525,13 @@ function avatarClass(p) {
   return p.gender === "M" ? "m" : p.gender === "F" ? "f" : "u";
 }
 
+function cnHtml(p) {
+  // Chinese name shown after the display name (skipped when the display
+  // name is already the Chinese name).
+  return p.chineseName && p.chineseName !== p.name
+    ? ` <span class="cn">${esc(p.chineseName)}</span>` : "";
+}
+
 function avatarHtml(p, small) {
   const inner = p.photo ? `<img src="${esc(p.photo)}" alt="${esc(p.name)}">` : initials(p);
   return `<div class="avatar ${small ? "small " : ""}${avatarClass(p)}">${inner}</div>`;
@@ -549,7 +556,7 @@ function personCard(p, relTag, subExtra) {
   return `<a class="pcard ${p.unknown ? "unknown" : ""}" href="#/p/${p.id}">
     ${avatarHtml(p, true)}
     <div>
-      <div class="pname">${esc(p.name)}</div>
+      <div class="pname">${esc(p.name)}${cnHtml(p)}</div>
       ${sub ? `<div class="psub">${esc(sub)}</div>` : ""}
       ${subExtra ? `<div class="psub">${esc(subExtra)}</div>` : ""}
     </div>
@@ -572,7 +579,7 @@ function pedNode(id, depth) {
   const p = byId[id];
   if (!p) return "";
   const years = lifeSpan(p);
-  let html = `<div class="pednode"><a class="pedcard ${p.unknown ? "unknown" : ""}" href="#/p/${p.id}">${esc(p.name)}${years ? ` <span class="tree-meta">${esc(years)}</span>` : ""}</a>`;
+  let html = `<div class="pednode"><a class="pedcard ${p.unknown ? "unknown" : ""}" href="#/p/${p.id}">${esc(p.name)}${cnHtml(p)}${years ? ` <span class="tree-meta">${esc(years)}</span>` : ""}</a>`;
   const parents = parentsOf(id);
   if (parents.length && depth > 0) {
     html += `<div class="pedparents">${parents.map(par => pedNode(par.id, depth - 1)).join("")}</div>`;
@@ -613,7 +620,7 @@ function renderPerson(id) {
   let html = `<div class="profile">
     ${avatarHtml(p)}
     <div>
-      <h2>${esc(p.name)}</h2>
+      <h2>${esc(p.name)}${cnHtml(p)}</h2>
       ${rel ? `<div class="kinship">${esc(rel)}</div>` : ""}
       ${facts.length ? `<dl class="facts">${facts.map(([k, v]) =>
         `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("")}</dl>` : ""}
@@ -674,7 +681,7 @@ function descendantList(personId, covered) {
   const p = byId[personId];
   if (!p) return "";
   covered.add(personId);
-  let html = `<li><span class="tree-person"><a href="#/p/${p.id}">${esc(p.name)}</a></span>`;
+  let html = `<li><span class="tree-person"><a href="#/p/${p.id}">${esc(p.name)}</a>${cnHtml(p)}</span>`;
   const meta = subLine(p);
   if (meta) html += ` <span class="tree-meta">${esc(meta)}</span>`;
 
@@ -708,9 +715,11 @@ function renderTree() {
       Hokkien, <em>Yan</em> in Mandarin — was a disciple of Confucius. Yan clans
       traditionally trace their line to Yan Hui (顏回), the Master's favorite
       student.</p>
-      <p>By that counting, this tree records the 32nd through 35th
-      generations of the clan — each member's generation is shown on
-      their page.</p>
+      <p>The clan genealogy — the 顏氏家谱 of the 仁贵 family of Yongchun,
+      Fujian (hall name 赐美堂) — records this branch from 顏亨曉 of the
+      30th generation, whose son 顏利潘 settled in Malaya. This tree
+      currently spans the 30th through 36th generations; each member's
+      generation is shown on their page.</p>
     </div>
   </div>`;
   for (const root of roots) {
@@ -800,6 +809,7 @@ searchInput.addEventListener("input", () => {
   if (!q) { closeSearch(); return; }
   searchMatches = PEOPLE.filter(p =>
     p.name.toLowerCase().includes(q) ||
+    (p.chineseName && p.chineseName.includes(searchInput.value.trim())) ||
     (p.location && p.location.toLowerCase().includes(q)) ||
     (p.occupation && p.occupation.toLowerCase().includes(q))
   ).slice(0, 8);

@@ -74,13 +74,19 @@ the **34th generation**, his children the **35th**. The site computes each
 blood-line member's generation from that anchor (patrilineal descent) and
 shows it on their page; the legend appears on the Full tree page.
 
-A written **clan genealogy** exists — generations 33–34 appear on pages
-21–23 — and cousins in **Penang** also keep up the Gan genealogy. Note for
-future research: Chinese genealogies often record up to three names per
-person (at birth, at marriage, at death), so the same ancestor may appear
-under different names; record alternates in a person's `notes`. Example:
-Gan Yong Teng appears in the genealogy as **Gan Boon Boo**, his
-before-marriage name.
+The written clan genealogy — **顏氏家谱**, the 仁贵 family of Shigu town,
+Yongchun county, Fujian (ancestral hall **赐美堂**) — was updated 2022 by the
+Malaysian clan association (contact listed: 顏章本). Our branch descends from
+**顏亨曉** (30th gen) → **顏利潘 曲德公** (31st, emigrated to Malaya) →
+**顏貞錄** (32nd) → **顏文雾 / Gan Yong Teng** (33rd). Pages 20–23 cover the
+利潘公 branch. Cousins in **Penang** also keep up the Gan genealogy.
+
+Generation-name characters by generation: 贞 (32nd), 文 (33rd), 章 (34th),
+and for the 35th, 华 for sons and 婷 for daughters. Chinese genealogies often
+record up to three names per person (birth, marriage, death) — e.g. Gan Yong
+Teng appears in the genealogy as **Gan Boon Boo (文雾)**, his before-marriage
+name. Record alternates in a person's `notes`; Chinese names go in the
+`chineseName` field.
 
 ## Family structure (confirmed)
 
@@ -108,8 +114,10 @@ before-marriage name.
 1. Names of the aunts'/uncles' partners (the cousins' other parents).
 2. Mom's side: Cathy's maiden name is **Neoh**; her oldest brother is
    **Heng Neoh**. Everything else on that side is still unknown.
-3. Both sets of great-grandparents; the names of Gan Yong Teng's three
-   sisters (the third married into the Lim family).
+3. Great-Grandmother Gan's name (顏貞錄's wife — possibly in the photos on
+   genealogy page 21); English names for 顏章池, 顏章炫, and the spouses
+   taken from the genealogy; the untranscribed branches (顏文啟, 顏文喜,
+   顏文經, 顏文娥, and the other 贞-generation brothers' families).
 4. Maria's surname; Nolan's surname (McPhee assumed); most birth years.
 
 ## Hosting on gan.family
