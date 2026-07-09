@@ -1419,3 +1419,7 @@ const UNIONS = [
 
 // The person shown when the site first loads.
 const HOME_PERSON = "grandpa-gan";
+
+// Default roots for the Full tree view — the generations in living memory.
+// The complete clan tree (from the 30th generation) lives at #/tree/all.
+const TREE_ROOTS = ["grandpa-gan", "gan-grandaunt", "grandpa-neoh"];

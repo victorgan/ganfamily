@@ -411,6 +411,21 @@
     background: var(--line);
   }
   .tree-person { font-family: var(--serif); font-weight: 600; }
+  .twist {
+    background: none;
+    border: none;
+    padding: 0 6px 0 0;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 0.8rem;
+    vertical-align: 1px;
+  }
+  .twist::before { content: "▾"; }
+  li.collapsed > .tree-person > .twist::before { content: "▸"; }
+  li.collapsed > ul, li.collapsed > .tree-partner { display: none; }
+  .branch-count { display: none; font-size: 0.8rem; color: var(--muted); font-weight: 400; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  li.collapsed > .tree-person .branch-count { display: inline; }
+  .tree-switch { font-size: 0.9rem; color: var(--muted); margin: -6px 0 16px; }
   .tree-partner { color: var(--muted); font-size: 0.92rem; }
   .tree-partner a { color: var(--muted); }
   .tree-meta { color: var(--muted); font-size: 0.82rem; font-weight: 400; }
@@ -751,13 +766,39 @@ function renderPerson(id) {
   return html;
 }
 
-function descendantList(personId, covered) {
+function subtreeSize(personId, seen = new Set()) {
+  // People beneath a person in the tree: partners and descendants.
+  if (seen.has(personId)) return 0;
+  seen.add(personId);
+  let n = 0;
+  for (const u of unionsOf(personId)) {
+    const partner = u.partners.find(x => x !== personId);
+    if (partner && !seen.has(partner)) { seen.add(partner); n++; }
+    for (const c of u.children) n += 1 + subtreeSize(c, seen);
+  }
+  return n;
+}
+
+function subtreeContains(personId, targetId) {
+  if (personId === targetId) return true;
+  return unionsOf(personId).some(u => u.children.some(c => subtreeContains(c, targetId)));
+}
+
+function descendantList(personId, covered, autoCollapse) {
   // Renders a person plus (recursively) their unions and children,
   // marking everyone rendered in `covered` so branches aren't duplicated.
+  // With autoCollapse, large branches away from HOME_PERSON start folded.
   const p = byId[personId];
   if (!p) return "";
   covered.add(personId);
-  let html = `<li><span class="tree-person"><a href="#/p/${p.id}">${esc(p.name)}</a>${cnHtml(p)}</span>`;
+  const kids = unionsOf(personId).flatMap(u => u.children);
+  const size = subtreeSize(personId);
+  const inFamilyTree = TREE_ROOTS.some(r =>
+    personId === r || ancestorMapOf(personId).has(r) || subtreeContains(personId, r));
+  const collapsed = autoCollapse && kids.length && size >= 6 && !inFamilyTree;
+  let html = `<li${collapsed ? ' class="collapsed"' : ""}><span class="tree-person">${
+    kids.length ? `<button class="twist" aria-label="Expand or collapse this branch"></button>` : ""
+  }<a href="#/p/${p.id}">${esc(p.name)}</a>${cnHtml(p)}<span class="branch-count"> · ${size} in this branch</span></span>`;
   const meta = subLine(p);
   if (meta) html += ` <span class="tree-meta">${esc(meta)}</span>`;
 
@@ -769,21 +810,22 @@ function descendantList(personId, covered) {
       html += `<div class="tree-partner">⚭ <a href="#/p/${partner.id}">${esc(partner.name)}</a>${unionYears(u)}</div>`;
     }
     if (u.children.length) {
-      html += `<ul>${u.children.map(c => descendantList(c, covered)).join("")}</ul>`;
+      html += `<ul>${u.children.map(c => descendantList(c, covered, autoCollapse)).join("")}</ul>`;
     }
   }
   html += `</li>`;
   return html;
 }
 
-function renderTree() {
-  // Roots: people with no recorded parents who founded a branch (have
-  // children). A candidate is skipped if it was already rendered inside an
-  // earlier branch (e.g. someone who married in), or if all of its children
-  // are already covered (e.g. the second set of great-grandparents of the
-  // same grandparent couple).
+function renderTree(showAll) {
+  // Default view starts at TREE_ROOTS — the generations in living memory —
+  // with every branch expanded. The full view (#/tree/all) starts at the
+  // apex ancestors, auto-collapsing large branches that don't lead to
+  // HOME_PERSON; ▸ toggles open them.
   const covered = new Set();
-  const roots = PEOPLE.filter(p => !parentUnion(p.id) && childrenOf(p.id).length);
+  const roots = showAll
+    ? PEOPLE.filter(p => !parentUnion(p.id) && childrenOf(p.id).length)
+    : TREE_ROOTS.map(id => byId[id]).filter(Boolean);
   let html = `<div class="legend">
     <span class="legend-seal">顏</span>
     <div>
@@ -792,12 +834,17 @@ function renderTree() {
       <a href="#/heritage">About the lineage →</a></p>
     </div>
   </div>`;
+  html += showAll
+    ? `<p class="tree-switch">The complete clan tree. Large branches are folded — click ▸ to open them.
+       <a href="#/tree">Back to the family tree →</a></p>`
+    : `<p class="tree-switch">Starting from the grandparents.
+       <a href="#/tree/all">See the whole clan, from 顏亨曉 (30th generation) →</a></p>`;
   for (const root of roots) {
     if (covered.has(root.id)) continue;
     if (childrenOf(root.id).every(k => covered.has(k.id))) continue;
     html += `<div class="tree-root">
-      <h3>${esc(root.name)}’s branch</h3>
-      <ul class="tree">${descendantList(root.id, covered)}</ul>
+      <h3>${esc(root.name)}${root.chineseName && root.chineseName !== root.name ? " " + esc(root.chineseName) : ""}’s branch</h3>
+      <ul class="tree">${descendantList(root.id, covered, showAll)}</ul>
     </div>`;
   }
   return html || `<p class="empty">No tree data.</p>`;
@@ -1004,8 +1051,11 @@ function route() {
     html = renderPerson(id);
     if (byId[id]) title = `${byId[id].name} · Gan Family Tree`;
   } else if (hash === "#/tree") {
-    html = renderTree();
-    title = "Full tree · Gan Family Tree";
+    html = renderTree(false);
+    title = "Family tree · Gan Family Tree";
+  } else if (hash === "#/tree/all") {
+    html = renderTree(true);
+    title = "Full clan tree · Gan Family Tree";
   } else if (hash === "#/all") {
     html = renderAll();
     title = "Everyone · Gan Family Tree";
@@ -1021,6 +1071,12 @@ function route() {
 }
 window.addEventListener("hashchange", route);
 route();
+
+// Branch collapse toggles in the tree views
+app.addEventListener("click", e => {
+  const twist = e.target.closest(".twist");
+  if (twist) twist.closest("li").classList.toggle("collapsed");
+});
 
 // ---------------------------------------------------------------------------
 // Search
