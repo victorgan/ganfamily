@@ -477,6 +477,24 @@ function siblingsOf(id) {
   return { full, half };
 }
 
+const _ancCache = new Map();
+function ancestorMapOf(id) {
+  // Map of ancestorId -> generations up (self = 0)
+  if (_ancCache.has(id)) return _ancCache.get(id);
+  const map = new Map([[id, 0]]);
+  const queue = [[id, 0]];
+  while (queue.length) {
+    const [cur, d] = queue.shift();
+    const u = parentUnion(cur);
+    if (!u) continue;
+    for (const pid of u.partners) {
+      if (!map.has(pid)) { map.set(pid, d + 1); queue.push([pid, d + 1]); }
+    }
+  }
+  _ancCache.set(id, map);
+  return map;
+}
+
 function dedupe(people) {
   return people.filter((p, i) => people.findIndex(x => x.id === p.id) === i);
 }
@@ -777,13 +795,40 @@ function renderTree() {
 
 function renderAll() {
   const sorted = [...PEOPLE].sort((a, b) => a.name.localeCompare(b.name));
-  const known = sorted.filter(p => !p.unknown);
-  const placeholders = sorted.filter(p => p.unknown);
   const card = p => personCard(p, null, personDescriptor(p));
-  let html = `<section>
-    <h3>Everyone (${known.length})</h3>
-    <div class="all-grid">${known.map(card).join("")}</div>
-  </section>`;
+  const section = (title, people) => people.length
+    ? `<section><h3>${esc(title)} (${people.length})</h3>
+       <div class="all-grid">${people.map(card).join("")}</div></section>`
+    : "";
+
+  const isGanBlood  = p => ancestorMapOf(p.id).has("gg-gan-father") && p.id !== "gg-gan-father";
+  const isNeohBlood = p => ancestorMapOf(p.id).has("grandpa-neoh") || ancestorMapOf(p.id).has("grandma-neoh");
+
+  const placeholders = sorted.filter(p => p.unknown);
+  const known = sorted.filter(p => !p.unknown);
+  const byGen = new Map();
+  const daughterLines = [], neoh = [], marriedIn = [];
+  for (const p of known) {
+    if (GAN_GENERATIONS.has(p.id)) {
+      const g = GAN_GENERATIONS.get(p.id);
+      if (!byGen.has(g)) byGen.set(g, []);
+      byGen.get(g).push(p);
+    } else if (isGanBlood(p)) {
+      daughterLines.push(p);
+    } else if (isNeohBlood(p)) {
+      neoh.push(p);
+    } else {
+      marriedIn.push(p);
+    }
+  }
+
+  let html = "";
+  for (const g of [...byGen.keys()].sort((a, b) => a - b)) {
+    html += section(`${nth(g)} generation · 顏 clan`, byGen.get(g));
+  }
+  html += section("Gan blood through the clan's daughters", daughterLines);
+  html += section("Neoh family — Mom's side", neoh);
+  html += section("Joined the family by marriage", marriedIn);
   if (placeholders.length) {
     html += `<section>
       <h3>Still to identify (${placeholders.length})</h3>
