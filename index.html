@@ -451,6 +451,17 @@
   .branch-count { display: none; font-size: 0.8rem; color: var(--muted); font-weight: 400; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
   li.collapsed > .tree-person .branch-count { display: inline; }
   .tree-switch { font-size: 0.9rem; color: var(--muted); margin: -6px 0 16px; }
+  .view-toggle {
+    display: inline-flex;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-bottom: 4px;
+    font-size: 0.88rem;
+  }
+  .view-toggle a { padding: 6px 16px; color: var(--muted); }
+  .view-toggle a:hover { text-decoration: none; color: var(--accent); }
+  .view-toggle a.active { background: var(--accent); color: #fdfaf2; }
   .tree-partner { color: var(--muted); font-size: 0.92rem; }
   .tree-partner a { color: var(--muted); }
   .tree-meta { color: var(--muted); font-size: 0.82rem; font-weight: 400; }
@@ -1052,13 +1063,37 @@ function renderTree(showAll) {
   return html || `<p class="empty">No tree data.</p>`;
 }
 
-function renderAll() {
+function renderAll(mode) {
   const sorted = [...PEOPLE].sort((a, b) => a.name.localeCompare(b.name));
   const card = p => personCard(p, null, personDescriptor(p));
   const section = (title, people) => people.length
     ? `<section><h3>${esc(title)} (${people.length})</h3>
        <div class="all-grid">${people.map(card).join("")}</div></section>`
     : "";
+  const toggle = `<div class="view-toggle">
+    <a href="#/all" class="${mode !== "places" ? "active" : ""}">By generation</a>
+    <a href="#/all/places" class="${mode === "places" ? "active" : ""}">By place</a>
+  </div>`;
+
+  if (mode === "places") {
+    const located = PEOPLE.filter(p => p.location);
+    const byCountry = new Map();
+    for (const p of located) {
+      const country = p.location.split(",").map(x => x.trim()).pop();
+      if (!byCountry.has(country)) byCountry.set(country, []);
+      byCountry.get(country).push(p);
+    }
+    const countries = [...byCountry.entries()].sort((a, b) => b[1].length - a[1].length);
+    let html = toggle;
+    for (const [country, people] of countries) {
+      people.sort((a, b) => a.location.localeCompare(b.location) || a.name.localeCompare(b.name));
+      html += section(country, people);
+    }
+    const missing = PEOPLE.length - located.length;
+    html += `<p class="empty">${located.length} people across ${countries.length} countries.
+      ${missing} more don't have a recorded location yet.</p>`;
+    return html;
+  }
 
   const isGanBlood  = p => ancestorMapOf(p.id).has("gg-gan-father") && p.id !== "gg-gan-father";
   const isNeohBlood = p => ancestorMapOf(p.id).has("grandpa-neoh") || ancestorMapOf(p.id).has("grandma-neoh");
@@ -1081,7 +1116,7 @@ function renderAll() {
     }
   }
 
-  let html = "";
+  let html = toggle;
   for (const g of [...byGen.keys()].sort((a, b) => a - b)) {
     html += section(`${nth(g)} generation · 顏 clan`, byGen.get(g));
   }
@@ -1260,8 +1295,11 @@ function route() {
     html = renderTree(true);
     title = "Full clan tree · Gan Family Tree";
   } else if (hash === "#/all") {
-    html = renderAll();
+    html = renderAll("gen");
     title = "Everyone · Gan Family Tree";
+  } else if (hash === "#/all/places") {
+    html = renderAll("places");
+    title = "Where everyone is · Gan Family Tree";
   } else if (hash === "#/heritage") {
     html = renderHeritage();
     title = "Heritage · Gan Family Tree";
