@@ -37,12 +37,12 @@ const PEOPLE = [
   // --------------------------------------------------------------------------
   {
     id: "gan-30-hengxiao",
-    name: "顏亨曉",
+    name: "顏亨曉 (仁山公)",
     gender: "M",
     chineseName: null,
     born: null, died: null,
     birthPlace: "Yongchun, Fujian, China", location: null, occupation: null,
-    notes: "30th generation. Father of six 利-generation sons; several settled in Malaya/Singapore.",
+    notes: "30th generation, honorific 仁山公. Father of six 利-generation sons: 利鳥 (明德公, settled Malaya/Singapore), 利鋆 (died young), 利琴 (达德公, remained in Yongchun), 利成 (died young), 利潘 (曲德公, our line, settled Malaya/Singapore), and 利恩 (偹德公, settled Malaya/Singapore).",
     unknown: false,
   },
   {
@@ -62,7 +62,7 @@ const PEOPLE = [
     chineseName: null,
     born: null, died: null,
     birthPlace: "Yongchun, Fujian, China", location: null, occupation: null,
-    notes: "31st generation, honorific 曲德公 — fifth of 亨曉's six sons; emigrated and settled in Malaya/Singapore. The genealogy section covering this whole branch is headed 利潘公.",
+    notes: "31st generation, honorific 曲德公 — fifth of 亨曉 仁山公's six sons; emigrated and settled in Malaya/Singapore. The genealogy section covering this whole branch is headed 利潘公.",
     unknown: false,
   },
   {
@@ -521,7 +521,7 @@ const PEOPLE = [
     chineseName: null,
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Serene's husband per the clan genealogy (page 22) — please confirm.",
+    notes: "Serene's husband. Chinese name from the genealogy (page 22); English name unknown.",
     unknown: false,
   },
   {

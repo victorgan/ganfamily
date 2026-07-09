@@ -305,6 +305,53 @@
   .pedcard.unknown { border-style: dashed; background: transparent; color: var(--muted); }
   .pedcard .tree-meta { font-weight: 400; }
 
+  /* ---- Heritage page ---- */
+  .heritage {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 36px 42px;
+    font-family: var(--serif);
+    font-size: 1.02rem;
+    line-height: 1.7;
+  }
+  .heritage h2 {
+    font-size: 1.6rem;
+    font-weight: 650;
+    margin: 0 0 6px;
+  }
+  .heritage .subtitle { color: var(--muted); font-style: italic; margin: 0 0 24px; }
+  .heritage h3 {
+    font-size: 1.15rem;
+    font-weight: 650;
+    margin: 30px 0 8px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+  }
+  .heritage p { margin: 0 0 12px; }
+  .heritage ul, .heritage ol { margin: 0 0 12px; padding-left: 24px; }
+  .heritage li { margin-bottom: 4px; }
+  .heritage figure { margin: 18px 0; text-align: center; }
+  .heritage figure img {
+    max-width: 100%;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+  }
+  .heritage figure.portrait img { max-width: 200px; }
+  .heritage figcaption { font-size: 0.85rem; color: var(--muted); margin-top: 8px; font-style: italic; }
+  .heritage .figrow { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+  .heritage .figrow figure { flex: 1 1 260px; margin: 6px 0; }
+  .heritage .gen-line { list-style: none; padding-left: 0; }
+  .heritage .gen-line li {
+    padding-left: 18px;
+    border-left: 2px solid var(--accent-soft);
+    margin: 0 0 10px;
+  }
+  .heritage .gen-line .gen-no { color: var(--accent); font-weight: 650; margin-right: 6px; }
+  .heritage .footnote { font-size: 0.88rem; color: var(--muted); }
+  @media (max-width: 600px) { .heritage { padding: 24px 20px; } }
+
   /* ---- Family legend ---- */
   .legend {
     display: flex;
@@ -382,6 +429,7 @@
   <nav>
     <a href="#/tree">Full tree</a>
     <a href="#/all">Everyone</a>
+    <a href="#/heritage">Heritage</a>
   </nav>
   <div class="search-wrap">
     <input id="search" type="search" placeholder="Search people…" autocomplete="off">
@@ -711,15 +759,9 @@ function renderTree() {
   let html = `<div class="legend">
     <span class="legend-seal">顏</span>
     <div>
-      <p>Legend has it that the first generation of the 顏 clan — <em>Gan</em> in
-      Hokkien, <em>Yan</em> in Mandarin — was a disciple of Confucius. Yan clans
-      traditionally trace their line to Yan Hui (顏回), the Master's favorite
-      student.</p>
-      <p>The clan genealogy — the 顏氏家谱 of the 仁贵 family of Yongchun,
-      Fujian (hall name 赐美堂) — records this branch from 顏亨曉 of the
-      30th generation, whose son 顏利潘 settled in Malaya. This tree
-      currently spans the 30th through 36th generations; each member's
-      generation is shown on their page.</p>
+      <p>This tree spans the 30th through 36th generations of the 顏 clan,
+      whose line is traditionally traced to a disciple of Confucius.
+      <a href="#/heritage">Read the full story of the lineage →</a></p>
     </div>
   </div>`;
   for (const root of roots) {
@@ -752,6 +794,121 @@ function renderAll() {
   return html;
 }
 
+function renderHeritage() {
+  return `<div class="heritage">
+    <h2>The 顏 (Gan) Lineage</h2>
+    <p class="subtitle">The story of the clan, from Qufu to Yongchun to the Nanyang —
+    drawn from the family's written genealogy, the 顏氏家谱.</p>
+
+    <figure class="portrait">
+      <img src="photos/yan-hui-portrait.jpg" alt="Portrait of Yan Hui (顏回)">
+      <figcaption>顏回祖公 — the portrait of Yan Hui that opens the family genealogy.</figcaption>
+    </figure>
+
+    <h3>The legend: a disciple of Confucius</h3>
+    <p>Family tradition holds that the first generation of the 顏 clan was a
+    disciple of Confucius. Yan clans across China trace their descent from
+    <strong>Yan Hui (顏回)</strong>, the Master's favorite and most gifted
+    student, who lived in Qufu in the 6th–5th centuries BCE. The genealogy
+    opens with his portrait, honoured as 顏回祖公 — "ancestor Yan Hui."
+    Counting from him, the family's generation numbers run unbroken to this
+    day: the cousins of Victor's generation are the <strong>35th
+    generation</strong>, and their children the 36th.</p>
+    <p>The surname is read <em>Yan</em> in Mandarin and <em>Gan</em> in
+    Hokkien — the romanization the family carried to Malaysia.</p>
+
+    <h3>The ancestral home: Yongchun, Fujian</h3>
+    <p>The family belongs to the <strong>仁贵</strong> family's third house
+    (三房), of <strong>Shigushan community, Shigu town, Yongchun county,
+    Quanzhou, Fujian</strong> (中国福建省泉州市永春县石鼓镇石鼓山社区). The
+    ancestral hall is named <strong>赐美堂</strong> — the "Hall of Bestowed
+    Beauty" — which still stands at Shigu community group 13, postcode
+    362601. Both the ancestral house and its shrine are photographed in the
+    genealogy.</p>
+    <div class="figrow">
+      <figure>
+        <img src="photos/ancestral-house.jpg" alt="The Yan clan ancestral house in Shigu, Yongchun">
+        <figcaption>The ancestral house (顏氏祖宇, 三房) in Shigu town, Yongchun.</figcaption>
+      </figure>
+      <figure>
+        <img src="photos/ancestral-shrine.jpg" alt="The ancestral shrine inside the house">
+        <figcaption>The shrine within — the plaque reads 顏氏三房祖宇.</figcaption>
+      </figure>
+    </div>
+
+    <h3>The migration: six sons of 亨曉</h3>
+    <p>In the 30th generation, <a href="#/p/gan-30-hengxiao">顏亨曉</a>,
+    honoured as <strong>仁山公</strong>, had six sons of the 利 generation.
+    Their fates tell the story of the family's migration from Fujian to the
+    Nanyang (Southeast Asia):</p>
+    <ol>
+      <li>利鳥 (明德公) — settled in Malaya / Singapore</li>
+      <li>利鋆 — died young (幼殇)</li>
+      <li>利琴 (达德公) — remained in Yongchun, Fujian</li>
+      <li>利成 — died young (幼殇)</li>
+      <li><a href="#/p/gan-31-lipan">利潘 (曲德公)</a> — settled in Malaya / Singapore — <strong>our line</strong></li>
+      <li>利恩 (偹德公) — settled in Malaya / Singapore</li>
+    </ol>
+    <p>The genealogy devotes its central section — headed 利潘公 — to the
+    descendants of the fifth son. Location notes scattered through its pages
+    (吉隆坡 Kuala Lumpur, 巴生 Klang, Sungai Petani, 槟城 Penang) trace where
+    each household put down roots in Malaysia.</p>
+
+    <h3>Our line, generation by generation</h3>
+    <ul class="gen-line">
+      <li><span class="gen-no">30th</span> <a href="#/p/gan-30-hengxiao">顏亨曉 仁山公</a>, of Yongchun</li>
+      <li><span class="gen-no">31st</span> <a href="#/p/gan-31-lipan">顏利潘 曲德公</a>, who crossed to Malaya</li>
+      <li><span class="gen-no">32nd</span> <a href="#/p/gg-gan-father">顏貞錄</a>, fourth of five 貞-generation brothers
+        (貞溉, 貞贊, 貞立, 貞錄, 貞仍), whose six children appear on pages 21–23 of the genealogy</li>
+      <li><span class="gen-no">33rd</span> <a href="#/p/grandpa-gan">顏文雾 — Gan Boon Boo, later Gan Yong Teng</a>,
+        of Kuala Lumpur, second of six (文啟, 文雾, 文謹, 文喜, 文經, 文娥); his sister
+        <a href="#/p/gan-grandaunt">文謹</a> married into the Lim family, giving the
+        <a href="#/p/han-tiong-lim">Han Tiong Lim</a> branch</li>
+      <li><span class="gen-no">34th</span> the eight 章-generation siblings — 
+        <a href="#/p/forest-gan">章琳 Forest</a>, <a href="#/p/gan-sibling-2">章池</a>,
+        <a href="#/p/simon-gan">章铨 Simon</a>, <a href="#/p/gan-sibling-3">章炫</a>,
+        <a href="#/p/cheong-koon-gan">章堃 Cheong Koon</a>, <a href="#/p/eric-gan">章銮 Eric</a>,
+        <a href="#/p/john-gan">章昕 John</a>, and <a href="#/p/jacqueline-gan">丽珠 Jacqueline</a> —
+        who spread from Malaysia to Canada, the Netherlands, and beyond</li>
+      <li><span class="gen-no">35th</span> the cousins — 华 for sons, 婷 for daughters —
+        now living across Canada, the United States, the Netherlands, Australia,
+        Singapore, and Malaysia</li>
+      <li><span class="gen-no">36th</span> the newest generation, from
+        <a href="#/p/nolan-mcphee">Corner Brook</a> to <a href="#/p/yan-guofeng">Kuala Lumpur</a></li>
+    </ul>
+
+    <h3>How the family names its generations</h3>
+    <p>Like most Chinese clans, each generation shares a fixed
+    generation-name character (字辈): <strong>貞</strong> for the 32nd,
+    <strong>文</strong> for the 33rd, <strong>章</strong> for the 34th, and for
+    the 35th <strong>华</strong> for sons and <strong>婷</strong> for
+    daughters. A person's clan generation is instantly readable from their
+    name — 章堃 and 章铨 must be brothers or cousins; 华胜 and 婷梅 must be
+    of the next generation.</p>
+    <p>Tradition sometimes gave a person up to three names over a lifetime —
+    at birth, at marriage, and at death. Gan Yong Teng, for example, appears
+    in the genealogy under his before-marriage name <strong>Gan Boon Boo
+    (文雾)</strong>. The register also preserves quieter customs: Forest is
+    marked 单身 (unmarried), and Simon (章铨) is additionally listed under his
+    uncle 文喜 with the note 过房 — ritually adopted across so that line would
+    continue.</p>
+
+    <h3>The written genealogy</h3>
+    <p>The source for all of this is the family's own register: the
+    <strong>顏氏家谱</strong> of the Yongchun 仁贵 family, 赐美堂 hall — 53
+    pages of charts, photographs, and notes. It was last revised on
+    25 February 2022 (the 壬寅 year) by the family association in Malaysia,
+    with a 章-generation cousin, 顏章本, listed as the coordinator for
+    corrections. Cousins in Penang remain active keepers of the Gan
+    genealogy.</p>
+    <p class="footnote">Several branches of the register — 文啟's, 文喜's,
+    文經's, and 文娥's families, and the other 貞-generation brothers'
+    lines — are not yet transcribed into this site. Corrections and additions
+    are welcome: every person lives in one simple file, editable on
+    <a href="https://github.com/victorgan/ganfamily/edit/main/data.js" target="_blank" rel="noopener">GitHub</a>.</p>
+  </div>`;
+}
+
 // ---------------------------------------------------------------------------
 // Router
 // ---------------------------------------------------------------------------
@@ -770,6 +927,9 @@ function route() {
   } else if (hash === "#/all") {
     html = renderAll();
     title = "Everyone · Gan Family Tree";
+  } else if (hash === "#/heritage") {
+    html = renderHeritage();
+    title = "Heritage · Gan Family Tree";
   } else {
     html = renderPerson(HOME_PERSON);
   }
