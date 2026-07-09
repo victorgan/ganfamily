@@ -856,4 +856,4 @@ const UNIONS = [
 ];
 
 // The person shown when the site first loads.
-const HOME_PERSON = "grandma-gan";
+const HOME_PERSON = "grandpa-gan";
