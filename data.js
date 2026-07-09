@@ -38,7 +38,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Grandpa Gan's father. Name and details unknown — please fill in.",
+    notes: "Gan Yong Teng's father. Name and details unknown — please fill in.",
     unknown: true,
   },
   {
@@ -47,7 +47,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Grandpa Gan's mother. Name and details unknown — please fill in.",
+    notes: "Gan Yong Teng's mother. Name and details unknown — please fill in.",
     unknown: true,
   },
 
@@ -56,26 +56,27 @@ const PEOPLE = [
   // --------------------------------------------------------------------------
   {
     id: "grandpa-gan",
-    name: "Grandpa Gan",
+    name: "Gan Yong Teng",
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's paternal grandfather. Name unknown — please fill in.",
-    unknown: true,
+    notes: "Victor's paternal grandfather. Known as Gan Boon Boo before marriage — he appears under that name in the clan genealogy (generations 33–34 are on pages 21–23).",
+    unknown: false,
   },
   {
     id: "grandma-gan",
-    name: "Grandma Gan",
+    name: "Tan Seok Eng",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's paternal grandmother, Grandpa Gan's wife. Name unknown — please fill in.",
-    unknown: true,
+    notes: "Victor's paternal grandmother, Gan Yong Teng's wife.",
+    unknown: false,
   },
 
   // --------------------------------------------------------------------------
-  // Dad's side — the eight Gan siblings, in birth order: Forest, two
-  // unknown siblings, Cheong Koon, Simon, Eric, John, Jacqueline
+  // Dad's side — the eight Gan siblings, in birth order: Forest, an unknown
+  // brother, Simon, another unknown brother, Cheong Koon, Eric, John,
+  // Jacqueline
   // --------------------------------------------------------------------------
   {
     id: "forest-gan",
@@ -97,11 +98,11 @@ const PEOPLE = [
   },
   {
     id: "gan-sibling-3",
-    name: "Gan Brother (3rd oldest)",
+    name: "Gan Brother (4th oldest)",
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Third-oldest of the eight Gan siblings. Father of Tivien and Alex. Name unknown — please fill in.",
+    notes: "Fourth-oldest of the eight Gan siblings. Father of Tivien and Alex. Name unknown — please fill in.",
     unknown: true,
   },
   {
@@ -112,7 +113,7 @@ const PEOPLE = [
     birthPlace: null,
     location: "Mississauga, Ontario, Canada",
     occupation: null,
-    notes: "Victor's dad. Fourth-oldest of the eight Gan siblings.",
+    notes: "Victor's dad. Fifth-oldest of the eight Gan siblings.",
     unknown: false,
   },
   {
@@ -134,7 +135,7 @@ const PEOPLE = [
     birthPlace: null,
     location: "Purmerend, Netherlands",
     occupation: null,
-    notes: "Victor's uncle. Jonathan's father. Fifth-oldest of the eight Gan siblings.",
+    notes: "Victor's uncle. Jonathan's father. Third-oldest of the eight Gan siblings.",
     unknown: false,
   },
   {
@@ -157,15 +158,34 @@ const PEOPLE = [
   },
 
   // --------------------------------------------------------------------------
-  // Lim branch — Grandpa Gan's sister married a Lim; her son is Han Tiong Lim
+  // Lim branch — Gan Yong Teng's third sister married a Lim; her son is
+  // Han Tiong Lim
   // --------------------------------------------------------------------------
   {
-    id: "gan-grandaunt",
-    name: "Grandaunt Gan",
+    id: "gan-grandaunt-1",
+    name: "Grandaunt Gan (1st sister)",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Grandpa Gan's sister, Han Tiong Lim's mother. Name unknown — please fill in.",
+    notes: "Oldest of Gan Yong Teng's sisters. Name and details unknown — please fill in.",
+    unknown: true,
+  },
+  {
+    id: "gan-grandaunt-2",
+    name: "Grandaunt Gan (2nd sister)",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Second of Gan Yong Teng's sisters. Name and details unknown — please fill in.",
+    unknown: true,
+  },
+  {
+    id: "gan-grandaunt",
+    name: "Grandaunt Gan (3rd sister)",
+    gender: "F",
+    born: null, died: null,
+    birthPlace: null, location: null, occupation: null,
+    notes: "Third of Gan Yong Teng's sisters; Han Tiong Lim's mother. Name unknown — please fill in.",
     unknown: true,
   },
   {
@@ -174,7 +194,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Han Tiong Lim's father, husband of Grandpa Gan's sister. Name unknown — please fill in.",
+    notes: "Han Tiong Lim's father, husband of Gan Yong Teng's third sister. Name unknown — please fill in.",
     unknown: true,
   },
   {
@@ -183,7 +203,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: "Gig Harbor, Washington, USA", occupation: null,
-    notes: "Son of Grandpa Gan's sister — first cousin of Cheong Koon's generation.",
+    notes: "Son of Gan Yong Teng's third sister — first cousin of Cheong Koon's generation.",
     unknown: false,
   },
   {
@@ -462,11 +482,11 @@ const PEOPLE = [
   },
   {
     id: "sibling3-partner",
-    name: "Wife of Gan Brother (3rd oldest)",
+    name: "Wife of Gan Brother (4th oldest)",
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Partner of the 3rd-oldest Gan brother; mother of Tivien and Alex. Name unknown — please fill in.",
+    notes: "Partner of the 4th-oldest Gan brother; mother of Tivien and Alex. Name unknown — please fill in.",
     unknown: true,
   },
   {
@@ -475,7 +495,7 @@ const PEOPLE = [
     gender: "F",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — the 3rd-oldest Gan brother's daughter, Alex's older sister.",
+    notes: "Victor's cousin — the 4th-oldest Gan brother's daughter, Alex's older sister.",
     unknown: false,
   },
   {
@@ -484,7 +504,7 @@ const PEOPLE = [
     gender: "M",
     born: null, died: null,
     birthPlace: null, location: null, occupation: null,
-    notes: "Victor's cousin — the 3rd-oldest Gan brother's son, Tivien's younger brother.",
+    notes: "Victor's cousin — the 4th-oldest Gan brother's son, Tivien's younger brother.",
     unknown: false,
   },
   {
@@ -571,15 +591,15 @@ const PEOPLE = [
 ];
 
 const UNIONS = [
-  // Great-grandparents → grandparents (Grandpa Gan and his sister; birth
-  // order between them unknown)
-  { id: "u-gg-gan",   partners: ["gg-gan-father", "gg-gan-mother"],   status: "married", start: null, end: null, children: ["grandpa-gan", "gan-grandaunt"] },
+  // Great-grandparents → grandparents (Gan Yong Teng and his three sisters;
+  // sisters ordered among themselves, order relative to him unknown)
+  { id: "u-gg-gan",   partners: ["gg-gan-father", "gg-gan-mother"],   status: "married", start: null, end: null, children: ["grandpa-gan", "gan-grandaunt-1", "gan-grandaunt-2", "gan-grandaunt"] },
   { id: "u-gg-neoh",  partners: ["gg-neoh-father", "gg-neoh-mother"], status: "married", start: null, end: null, children: ["grandpa-neoh"] },
   { id: "u-gg-mgm",   partners: ["gg-mgm-father", "gg-mgm-mother"],   status: "married", start: null, end: null, children: ["grandma-neoh"] },
 
   // Grandparents → parents' generation (children listed in birth order)
   { id: "u-gan-gp",   partners: ["grandpa-gan", "grandma-gan"],       status: "married", start: null, end: null,
-    children: ["forest-gan", "gan-sibling-2", "gan-sibling-3", "cheong-koon-gan", "simon-gan", "eric-gan", "john-gan", "jacqueline-gan"] },
+    children: ["forest-gan", "gan-sibling-2", "simon-gan", "gan-sibling-3", "cheong-koon-gan", "eric-gan", "john-gan", "jacqueline-gan"] },
   { id: "u-neoh",     partners: ["grandpa-neoh", "grandma-neoh"],     status: "married", start: null, end: null,
     children: ["heng-neoh", "soo-neoh", "cathy-gan"] },
 

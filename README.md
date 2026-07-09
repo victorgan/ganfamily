@@ -74,31 +74,42 @@ the **34th generation**, his children the **35th**. The site computes each
 blood-line member's generation from that anchor (patrilineal descent) and
 shows it on their page; the legend appears on the Full tree page.
 
+A written **clan genealogy** exists — generations 33–34 appear on pages
+21–23 — and cousins in **Penang** also keep up the Gan genealogy. Note for
+future research: Chinese genealogies often record up to three names per
+person (at birth, at marriage, at death), so the same ancestor may appear
+under different names; record alternates in a person's `notes`. Example:
+Gan Yong Teng appears in the genealogy as **Gan Boon Boo**, his
+before-marriage name.
+
 ## Family structure (confirmed)
 
-- Victor's paternal grandparents (names unknown) had eight children, in birth
-  order: **Forest** (eldest), two siblings still to identify, **Cheong Koon**
-  (Victor's dad, b. 1950, Mississauga), **Simon** (Purmerend, NL), **Eric**
-  (KL), **John** (youngest brother), and **Jacqueline** (youngest).
+- Victor's paternal grandparents are **Gan Yong Teng** (in the genealogy:
+  Gan Boon Boo) and **Tan Seok Eng**. Their eight children, in birth order:
+  **Forest** (eldest), an unidentified brother (2nd), **Simon** (3rd,
+  Purmerend, NL), another unidentified brother (4th), **Cheong Koon** (5th —
+  Victor's dad, b. 1950, Mississauga), **Eric** (6th, KL), **John** (7th,
+  youngest brother), and **Jacqueline** (youngest).
 - Cousins: **Serene** and **Elaine** (Eric's daughters), **Jonathan**
   (Simon's son), **Maria** (Jacqueline's daughter), **Natalie** and
   **Stephanie** (John's daughters), **Tinie**, **Michael**, and **James**
   (the 2nd-oldest brother's children, James youngest), and **Tivien** and
-  **Alex** (the 3rd-oldest brother's children, Tivien older).
+  **Alex** (the 4th-oldest brother's children, Tivien older).
 - **Calvin, Victor, Christine** are Cheong Koon & Cathy's children;
   Christine (b. 1991, Corner Brook) is married to **Ian McPhee**, son
   **Nolan**.
-- **Lim branch**: Grandpa Gan's sister (name unknown) married a Lim; their
-  son **Han Tiong Lim** married **Irene** — children **Kevin** (oldest),
-  **Kristen** (middle), **Travis** (youngest). Travis is married to
-  **Fiona**, son **Henry**.
+- **Lim branch**: Gan Yong Teng had three sisters; the **third sister**
+  (name unknown) married a Lim. Their son **Han Tiong Lim** married
+  **Irene** — children **Kevin** (oldest), **Kristen** (middle), **Travis**
+  (youngest). Travis is married to **Fiona**, son **Henry**.
 
 ## Still unknown
 
 1. Names of the aunts'/uncles' partners (the cousins' other parents).
 2. Mom's side: Cathy's maiden name is **Neoh**; her oldest brother is
    **Heng Neoh**. Everything else on that side is still unknown.
-3. Grandma Gan's name, and both sets of great-grandparents.
+3. Both sets of great-grandparents; the names of Gan Yong Teng's three
+   sisters (the third married into the Lim family).
 4. Maria's surname; Nolan's surname (McPhee assumed); most birth years.
 
 ## Hosting on gan.family
