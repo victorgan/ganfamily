@@ -4,7 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Gan Family Tree</title>
-<meta name="description" content="The Gan family tree — browse ancestors, relatives, and family connections.">
+<meta name="description" content="The Gan (顏) family tree — browse ancestors, relatives, and the clan's story from Yongchun, Fujian to the world.">
+<meta property="og:title" content="Gan Family Tree · 顏氏家谱">
+<meta property="og:description" content="Browse the Gan (顏) family tree — 30th to 36th generations of the Yongchun 仁贵 line.">
+<meta property="og:url" content="https://gan.family/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://gan.family/photos/ancestral-house.jpg">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2222%22 fill=%22%23a93c26%22/><text x=%2250%22 y=%2272%22 font-size=%2260%22 text-anchor=%22middle%22 fill=%22%23fdfaf2%22 font-family=%22Georgia,serif%22>%E9%A1%8F</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,7 +28,7 @@
     --warn-ink: #8c5a24;
     --warn-bg: #f3e7cf;
     --radius: 14px;
-    --serif: "Fraunces", Georgia, "Times New Roman", serif;
+    --serif: "Fraunces", Georgia, "Songti SC", "Noto Serif SC", "Times New Roman", serif;
     --shadow: 0 1px 2px rgba(80, 60, 20, 0.05), 0 5px 18px rgba(80, 60, 20, 0.07);
   }
   @media (prefers-color-scheme: dark) {
@@ -179,7 +184,7 @@
     letter-spacing: 0.005em;
   }
   .kinship { color: var(--accent); font-size: 0.95rem; }
-  .cn { font-weight: 450; color: var(--muted); margin-left: 8px; font-size: 0.82em; letter-spacing: 0.04em; }
+  .cn { font-family: var(--serif); font-weight: 450; color: var(--muted); margin-left: 8px; font-size: 0.82em; letter-spacing: 0.04em; }
   .facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 16px; margin-top: 12px; font-size: 0.93rem; }
   .facts dt { color: var(--muted); }
   .facts dd { margin: 0; }
@@ -415,6 +420,11 @@
 
   .empty { color: var(--muted); font-size: 0.92rem; font-style: italic; }
 
+  @media print {
+    header, footer, .search-wrap { display: none; }
+    body { background: #fff; }
+    .profile, .union, .tree-root, .heritage, .pcard { box-shadow: none; }
+  }
   @media (max-width: 600px) {
     .profile { flex-direction: column; }
     .search-wrap { margin-left: 0; width: 100%; }
@@ -599,7 +609,7 @@ function cnHtml(p) {
 }
 
 function avatarHtml(p, small) {
-  const inner = p.photo ? `<img src="${esc(p.photo)}" alt="${esc(p.name)}">` : initials(p);
+  const inner = p.photo ? `<img src="${esc(p.photo)}" alt="${esc(p.name)}" loading="lazy">` : initials(p);
   return `<div class="avatar ${small ? "small " : ""}${avatarClass(p)}">${inner}</div>`;
 }
 
@@ -846,7 +856,7 @@ function renderHeritage() {
     drawn from the family's written genealogy, the 顏氏家谱.</p>
 
     <figure class="portrait">
-      <img src="photos/yan-hui-portrait.jpg" alt="Portrait of Yan Hui (顏回)">
+      <img src="photos/yan-hui-portrait.jpg" alt="Portrait of Yan Hui (顏回)" loading="lazy">
       <figcaption>顏回祖公 — the portrait of Yan Hui that opens the family genealogy.</figcaption>
     </figure>
 
@@ -877,11 +887,11 @@ function renderHeritage() {
     genealogy.</p>
     <div class="figrow">
       <figure>
-        <img src="photos/ancestral-house.jpg" alt="The Yan clan ancestral house in Shigu, Yongchun">
+        <img src="photos/ancestral-house.jpg" alt="The Yan clan ancestral house in Shigu, Yongchun" loading="lazy">
         <figcaption>The ancestral house (顏氏祖宇, 三房) in Shigu town, Yongchun.</figcaption>
       </figure>
       <figure>
-        <img src="photos/ancestral-shrine.jpg" alt="The ancestral shrine inside the house">
+        <img src="photos/ancestral-shrine.jpg" alt="The ancestral shrine inside the house" loading="lazy">
         <figcaption>The shrine within — the plaque reads 顏氏三房祖宇.</figcaption>
       </figure>
     </div>
@@ -941,8 +951,9 @@ function renderHeritage() {
       <li><span class="gen-no">35th</span> the cousins — 华 for sons, 婷 for daughters —
         now living across Canada, the United States, the Netherlands, Australia,
         Singapore, and Malaysia</li>
-      <li><span class="gen-no">36th</span> the newest generation, from
-        <a href="#/p/nolan-mcphee">Corner Brook</a> to <a href="#/p/yan-guofeng">Kuala Lumpur</a></li>
+      <li><span class="gen-no">36th</span> the newest generation — many carrying
+        the 宇 character — from <a href="#/p/nolan-mcphee">Nolan</a> in Newfoundland
+        to the <a href="#/p/yan-yurui">宇-cousins</a> of Penang and Sungai Petani</li>
     </ul>
 
     <h3>How the family names its generations</h3>
@@ -950,7 +961,7 @@ function renderHeritage() {
     generation-name character (字辈): <strong>貞</strong> for the 32nd,
     <strong>文</strong> for the 33rd, <strong>章</strong> for the 34th, and for
     the 35th <strong>华</strong> for sons and <strong>婷</strong> for
-    daughters. A person's clan generation is instantly readable from their
+    daughters; 宇 recurs in many 36th-generation names. A person's clan generation is instantly readable from their
     name — 章堃 and 章铨 must be brothers or cousins; 华胜 and 婷梅 must be
     of the next generation.</p>
     <p>Tradition sometimes gave a person up to three names over a lifetime —
